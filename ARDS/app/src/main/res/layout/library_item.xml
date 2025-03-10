@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:background="@android:color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Train Component Image -->
+        <ImageView
+            android:id="@+id/imgLibraryItem"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/train_spring"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvLibraryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Axle Box"
+            android:textSize="12sp"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/imgLibraryItem"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/tvLibraryDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Overheating, cracks, oil leakage, bearing failure..."
+            android:textSize="10sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/darker_gray"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintTop_toBottomOf="@id/tvLibraryTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Total Videos Count -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="10dp"
+            app:layout_constraintTop_toBottomOf="@id/tvLibraryDescription"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvTotalVideos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Videos: 4"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <Button
+                android:id="@+id/btnView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="View"
+                android:layout_alignParentRight="true"
+                android:textSize="10sp"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#7A00CC"
+                app:layout_constraintTop_toBottomOf="@id/tvTotalVideos"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </RelativeLayout>
+
+        <!-- View Button -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.ards.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_library"
+        android:name="com.ards.ui.library.LibraryFragment"
+        android:label="@string/title_library"
+        tools:layout="@layout/fragment_library" />
+
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.ards.ui.history.HistoryFragment"
+        android:label="@string/title_history"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.ards.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_scan"
+        android:name="com.ards.ui.scan.ScanFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_scan" >
+
+        <action
+            android:id="@+id/scanFragment_to_playgroundFragment"
+            app:destination="@id/playgroundFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/playgroundFragment"
+        android:name="com.ards.ui.playground.PlaygroundFragment"
+        android:label="Playground Fragment"
+        tools:layout="@layout/fragment_playground">
+
+        <action
+            android:id="@+id/playgroundFragment_to_processedFragment"
+            app:destination="@id/playgroundFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/processedFragment"
+        android:name="com.ards.ui.processed.ProcessedFragment"
+        android:label="Playground Fragment"
+        tools:layout="@layout/fragment_processed"/>
+
+</navigation>

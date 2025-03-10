@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Train Name -->
+        <TextView
+            android:id="@+id/trainName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sabarmati Express"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <!-- Train Number -->
+        <TextView
+            android:id="@+id/trainNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12578"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_alignParentEnd="true"/>
+
+        <!-- Route Details -->
+        <TextView
+            android:id="@+id/trainRoute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DELHI → BHOPAL"
+            android:textSize="12sp"
+            android:layout_below="@id/trainName"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Time Details -->
+        <TextView
+            android:id="@+id/trainTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11:00 → 23:35"
+            android:textSize="12sp"
+            android:layout_below="@id/trainRoute"
+            android:layout_marginTop="2dp"/>
+
+        <!-- Faults Count -->
+        <TextView
+            android:id="@+id/faultsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Faults: 2"
+            android:textSize="12sp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/trainNumber"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Arrow Button -->
+        <ImageView
+            android:id="@+id/arrowIcon"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/custom_arrow"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/faultsCount"
+             />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvFaultPart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Brakes"
+        android:textSize="16sp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/tvTimeStamp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="1:32"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:padding="5dp"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!-- Correct Button -->
+        <ImageButton
+            android:id="@+id/btnCorrect"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_correct"
+            android:tint="@color/gray"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Correct"
+            android:layout_marginEnd="5dp"
+            tools:ignore="UseAppTint" />
+
+        <ImageButton
+            android:id="@+id/btnWrong"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_wrong"
+            android:tint="@color/gray"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Wrong"
+            tools:ignore="UseAppTint" />
+
+    </LinearLayout>
+
+</LinearLayout>

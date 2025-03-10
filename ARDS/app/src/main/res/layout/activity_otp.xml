@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.otp.OtpActivity">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:alpha="0.3"
+        android:background="@drawable/bg_rail_tracks"
+        android:layout_height="match_parent">
+
+    </ImageView>
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/purple_500"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp"
+            tools:context=".OtpVerificationActivity">
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                />
+
+            <!-- Card View for OTP Box -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@android:color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp"
+                    android:gravity="center">
+
+                    <!-- Title -->
+                    <TextView
+                        android:id="@+id/tv_verify_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verify Phone Number"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black" />
+
+                    <!-- Subtitle -->
+                    <TextView
+                        android:id="@+id/tv_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="We Have Sent Code To Your Phone Number"
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp" />
+
+                    <!-- Phone Number -->
+                    <TextView
+                        android:id="@+id/tv_phone_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+00 0000000 000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="8dp" />
+
+                    <!-- OTP Input -->
+                    <com.chaos.view.PinView
+                        android:id="@+id/pin_view"
+                        android:layout_marginTop="10dp"
+                        style="@style/PinWidget.PinView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="true"
+                        android:hint="Hint."
+                        android:inputType="number"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:cursorWidth="2dp"
+                        app:itemCount="6"
+                        app:itemHeight="40dp"
+                        app:itemRadius="4dp"
+                        app:itemSpacing="5dp"
+                        app:itemWidth="40dp"
+                        app:lineWidth="2dp"
+                        app:viewType="rectangle" />
+
+                    <!-- Timer -->
+
+                    <!-- Verify Button -->
+                    <Button
+                        android:id="@+id/btn_verify"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Verify"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/button_bg"
+                        android:layout_marginTop="12dp" />
+
+                    <!-- Resend OTP -->
+                    <TextView
+                        android:id="@+id/tv_resend_otp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Resend OTP"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
