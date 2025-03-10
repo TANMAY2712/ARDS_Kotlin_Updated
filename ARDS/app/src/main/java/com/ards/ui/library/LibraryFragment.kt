@@ -4,17 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.ards.R
 import com.ards.databinding.FragmentLibraryBinding
-import com.ards.ui.history.adapter.HistoryAdapter
-import com.ards.ui.history.model.Recent
 import com.ards.ui.library.adapter.LibraryAdapter
-import com.ards.ui.library.model.Library
 
 class LibraryFragment : Fragment() {
 
@@ -23,6 +19,7 @@ class LibraryFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val libraryViewModel: LibraryViewModel by viewModels()
     private lateinit var libraryAdapter: LibraryAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +32,12 @@ class LibraryFragment : Fragment() {
         _binding = FragmentLibraryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.rvTrainLibrary.layoutManager = GridLayoutManager(requireContext(), 1)
+        libraryViewModel.isLoading.observe(requireActivity()) { isLoading ->
+            binding.libraryProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+        getLibrary("LibraryCategory",0)
+
+        /*binding.rvTrainLibrary.layoutManager = GridLayoutManager(requireContext(), 1)
 
         val videoList = listOf(
             Library("Springs (Suspension Springs)", "Cracks, deformation, corrosion...", R.drawable.train_spring, 2),
@@ -47,7 +49,7 @@ class LibraryFragment : Fragment() {
         )
 
         libraryAdapter = LibraryAdapter(videoList)
-        binding.rvTrainLibrary.adapter = libraryAdapter
+        binding.rvTrainLibrary.adapter = libraryAdapter*/
         return root
     }
 
@@ -55,4 +57,21 @@ class LibraryFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    private fun getLibrary(type: String, Id: Int) {
+        libraryViewModel.getLibrary(type, Id)
+            .observe(viewLifecycleOwner) { result ->
+
+                result.onSuccess { notifications ->
+                    // Setting up RecyclerView
+                    binding.rvTrainLibrary.layoutManager = GridLayoutManager(requireContext(), 1)
+                    libraryAdapter = LibraryAdapter(requireContext(), notifications.Data)
+                    binding.rvTrainLibrary.adapter = libraryAdapter
+                }
+
+                result.onFailure { error ->
+                    Toast.makeText(requireContext(), "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
 }

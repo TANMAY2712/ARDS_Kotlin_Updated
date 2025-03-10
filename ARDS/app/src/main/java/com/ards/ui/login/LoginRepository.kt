@@ -1,11 +1,11 @@
 package com.ards.ui.login
 
-import com.ards.remote.service.ArdsService
-import com.wus.loan.remote.ApiFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ards.domain.model.GenrateOTPRequest
 import com.ards.remote.apimodel.GenrateOTPResponse
+import com.ards.remote.remote.ApiFactory
+import com.ards.remote.remote.service.ArdsService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

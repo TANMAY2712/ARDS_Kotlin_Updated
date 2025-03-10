@@ -1,13 +1,15 @@
-package com.ards.ui.processed
+package com.ards.ui.playground
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ards.model.Playground
+import com.ards.ui.playground.repository.PlaygroundRepository
+import com.ards.ui.playground.repository.ProcessesRepository
 
-class ProcessedViewModel : ViewModel() {
+class ProcessesViewModel : ViewModel() {
+    private val repository = ProcessesRepository()
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+    fun getPlaygroundList(apiUrl: String): LiveData<List<Playground>> {
+        return repository.getPlayground(apiUrl)
     }
-    val text: LiveData<String> = _text
 }

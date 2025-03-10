@@ -1,4 +1,4 @@
-package com.wus.loan.remote
+package com.ards.remote.remote
 
 import android.content.Context
 import com.ards.utils.Constant
@@ -9,9 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiFactory {
-
-    /*fun getCasheService(context: Context): CasheService =
-        buildRetrofitClient(context).create(CasheService::class.java)*/
     private fun buildRetrofitClient(context: Context): Retrofit {
         val okHttpClient =
             getOkHttpClient(context,makeHttpLoggingInterceptor())

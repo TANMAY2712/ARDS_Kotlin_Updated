@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ards.databinding.FragmentProcessedBinding
+import com.ards.ui.playground.ProcessesViewModel
 import com.ards.ui.processed.adapter.FaultListAdapter
 import com.ards.ui.processed.model.FaultItem
 import com.google.android.exoplayer2.ExoPlayer
@@ -24,7 +26,8 @@ class ProcessedFragment : Fragment() {
     private val binding get() = _binding!!
     private var player: ExoPlayer? = null
     private lateinit var overlayText: TextView
-
+    private lateinit var faultListAdapter: FaultListAdapter
+    private val viewModel: ProcessesViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -45,28 +48,32 @@ class ProcessedFragment : Fragment() {
         player?.play()
         player?.setPlaybackSpeed(0.5f)
         // Fault List with timestamps (Milliseconds)
-        val faultList = listOf(
-            FaultItem("Brakes", "0:32", 32_000),
-            FaultItem("Suspensions", "0:45", 45_000),
-            FaultItem("Springs", "1:32", 92_000),
-            FaultItem("Axle Box", "1:52", 112_000)
-        )
 
-        // RecyclerView Setup
-        binding.rvFaultList.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = FaultListAdapter(faultList, requireContext()) { seekTime ->
-            player?.seekTo(seekTime) // Jump to timestamp
-            player?.play()
-        }
-        binding.rvFaultList.adapter = adapter
+        setupRecyclerView()
+
+        val dynamicApiUrl = "http://98.70.56.87:8085/model_inference?s3_path=uploads/65c612e57db39ec6eb44017c.mp4&train_no=0&station=0&rec_side=Right"
+        observeViewModel(dynamicApiUrl)
 
         // Monitor playback position
-        monitorPlaybackPosition()
+      //  monitorPlaybackPosition()
 
         return root
     }
 
-    private fun monitorPlaybackPosition() {
+    private fun setupRecyclerView() {
+        binding.rvFaultList.layoutManager = LinearLayoutManager(requireContext())
+        faultListAdapter = FaultListAdapter(emptyList()) { playground ->
+        }
+        binding.rvFaultList.adapter = faultListAdapter
+    }
+
+    private fun observeViewModel(apiUrl: String) {
+        viewModel.getPlaygroundList(apiUrl).observe(viewLifecycleOwner) { playgroundList ->
+            faultListAdapter.updateData(playgroundList)
+        }
+    }
+
+   /* private fun monitorPlaybackPosition() {
         val handler = Handler(Looper.getMainLooper())
         handler.post(object : Runnable {
             override fun run() {
@@ -99,7 +106,7 @@ class ProcessedFragment : Fragment() {
                 }
             }
         })
-    }
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

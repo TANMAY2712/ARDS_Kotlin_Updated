@@ -3,8 +3,8 @@ package com.ards.ui.playground.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ards.model.Playground
-import com.ards.remote.service.ArdsService
-import com.wus.loan.remote.ApiFactory
+import com.ards.remote.remote.ApiFactory
+import com.ards.remote.remote.service.ArdsService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

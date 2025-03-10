@@ -68,4 +68,15 @@ dependencies {
     implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
 
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("com.google.android.gms:play-services-auth-api-phone:17.5.0")
+
+
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.video)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.extensions)
+
 }

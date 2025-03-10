@@ -1,5 +1,6 @@
 package com.ards.ui.home.graph
 
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +8,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ards.R
+import com.ards.remote.apimodel.ChartResponse
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 
-class GraphCardAdapter(private val items: List<GraphData>) : RecyclerView.Adapter<GraphCardAdapter.ViewHolder>() {
+class GraphCardAdapter(
+    private val context: Context,
+    private val items: List<ChartResponse.DataResponse.Faults>
+) : RecyclerView.Adapter<GraphCardAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.tvTitle)
@@ -27,11 +32,16 @@ class GraphCardAdapter(private val items: List<GraphData>) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.title.text = item.title
-        holder.number.text = "${item.value}+"
+        holder.title.text = item.Type
+        holder.number.text = "${item.FaultCount}+"
 
         // Setup Chart Data
-        val entries = item.graphValues.mapIndexed { index, value -> Entry(index.toFloat(), value) }
+        val entries = listOf(10f, 20f, 15f, 30f, 25f, 35f).mapIndexed { index, value ->
+            Entry(
+                index.toFloat(),
+                value
+            )
+        }
         val dataSet = LineDataSet(entries, "").apply {
             color = Color.parseColor("#6A1B9A")  // Purple color
             setDrawValues(false)

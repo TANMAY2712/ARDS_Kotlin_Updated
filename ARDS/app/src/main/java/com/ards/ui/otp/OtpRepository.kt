@@ -1,11 +1,11 @@
 package com.ards.ui.otp
 
-import com.ards.remote.service.ArdsService
-import com.wus.loan.remote.ApiFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ards.remote.apimodel.VerifyOtpRequest
 import com.ards.remote.apimodel.VerifyOtpResponse
+import com.ards.remote.remote.ApiFactory
+import com.ards.remote.remote.service.ArdsService
 import com.ards.utils.Constant
 import retrofit2.Call
 import retrofit2.Callback

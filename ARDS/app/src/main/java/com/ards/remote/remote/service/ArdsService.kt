@@ -1,8 +1,7 @@
-package com.ards.remote.service
+package com.ards.remote.remote.service
 
 import com.ards.domain.model.GenrateOTPRequest
 import com.ards.model.Playground
-import com.ards.utils.Constant
 import retrofit2.Call
 import com.ards.remote.apimodel.VerifyOtpResponse
 import com.ards.remote.apimodel.GenrateOTPResponse
@@ -10,6 +9,20 @@ import com.ards.remote.apimodel.VerifyOtpRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Url
+import com.ards.remote.apimodel.ChartRequest
+import com.ards.remote.apimodel.ChartResponse
+import com.ards.remote.apimodel.MasterDataRequest
+import com.ards.remote.apimodel.MasterDataResponse
+import com.ards.remote.apimodel.NotificationFaultListRequest
+import com.ards.remote.apimodel.NotificationFaultListResponse
+import com.ards.remote.apimodel.NotificationListRequest
+import com.ards.remote.apimodel.NotificationListResponse
+import com.ards.remote.apimodel.SignInRequest
+import com.ards.remote.apimodel.SignInResponse
+import com.ards.remote.apimodel.VideoByCategoryRequest
+import com.ards.remote.apimodel.VideoByCategoryResponse
+import com.ards.utils.Constant
 
 interface ArdsService {
     /*@POST(Constant.ApiEndPoint.SignOut)
@@ -78,5 +91,28 @@ interface ArdsService {
 
     @GET("videos") // Replace with actual endpoint
     fun getVideos(): Call<List<Playground>>
+    @GET
+    fun getPlayground(@Url fullUrl: String): Call<List<Playground>>
+
+    @POST(Constant.ApiEndPoint.NotificationFault)
+    fun getNotificationFaultList(@Body request: NotificationFaultListRequest): Call<NotificationFaultListResponse>
+
+    @POST(Constant.ApiEndPoint.NotificationList)
+    fun getAllNotification(@Body request: NotificationListRequest): Call<NotificationListResponse>
+
+    @POST(Constant.ApiEndPoint.SignIn)
+    fun signIn(@Body request: SignInRequest): Call<SignInResponse>
+
+    @POST(Constant.ApiEndPoint.ChartByFaultType)
+    fun chartByFaultType(@Body request: ChartRequest): Call<ChartResponse>
+
+    @POST(Constant.ApiEndPoint.MasterData)
+    fun masterData(@Body request: MasterDataRequest): Call<MasterDataResponse>
+
+    @POST(Constant.ApiEndPoint.UserProfile)
+    fun updateUserProfile(@Body request: MasterDataRequest): Call<MasterDataResponse>
+
+    @POST(Constant.ApiEndPoint.VideoByCategory)
+    fun getVideoByCategory(@Body request: VideoByCategoryRequest): Call<VideoByCategoryResponse>
 
 }

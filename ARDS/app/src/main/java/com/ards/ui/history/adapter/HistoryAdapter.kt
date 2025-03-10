@@ -1,14 +1,19 @@
 package com.ards.ui.history.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ards.R
+import com.ards.remote.apimodel.NotificationListResponse
 import com.ards.ui.history.model.Recent
 
-class HistoryAdapter(private val trainList: List<Recent>) :
+class HistoryAdapter(
+    private val context: Context,
+    private var trainList: List<NotificationListResponse.DataResponse.Faults>
+) :
     RecyclerView.Adapter<HistoryAdapter.TrainViewHolder>() {
 
     class TrainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -31,15 +36,15 @@ class HistoryAdapter(private val trainList: List<Recent>) :
 
     override fun onBindViewHolder(holder: TrainViewHolder, position: Int) {
         val train = trainList[position]
-        holder.trainName.text = train.trainName
-        holder.trainNo.text = train.trainNo
-        holder.trainRoute.text = train.from+" -> "+train.to
-        holder.trainTime.text = train.departure+" -> "+ train.arrival
+        holder.trainName.text = train.train_name
+        holder.trainNo.text = train.train_number
+        holder.trainRoute.text = train.station_name
+        holder.trainTime.text = train.createdDate
        // holder.from.text = train.from
        // holder.departure.text = train.departure
       //  holder.to.text = train.to
       //  holder.arrival.text = train.arrival
-        holder.faults.text = "Faults: ${train.faults}"
+        holder.faults.text = "5"//"Faults: ${train.faults}"
     }
 
     override fun getItemCount(): Int = trainList.size

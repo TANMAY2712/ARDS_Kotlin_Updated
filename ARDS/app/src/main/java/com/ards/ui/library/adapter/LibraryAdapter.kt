@@ -1,5 +1,6 @@
 package com.ards.ui.library.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ards.R
+import com.ards.remote.apimodel.MasterDataResponse
 import com.ards.ui.library.model.Library
 
-class LibraryAdapter(private val componentList: List<Library>) :
+class LibraryAdapter(
+    private val context: Context,
+    private val componentList: List<MasterDataResponse.DataResponse>
+) :
     RecyclerView.Adapter<LibraryAdapter.ComponentViewHolder>() {
 
     class ComponentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -29,10 +34,10 @@ class LibraryAdapter(private val componentList: List<Library>) :
 
     override fun onBindViewHolder(holder: ComponentViewHolder, position: Int) {
         val component = componentList[position]
-        holder.image.setImageResource(component.imageResId)
-        holder.name.text = component.name
-        holder.description.text = component.description
-        holder.totalVideos.text = "Total Videos: ${component.totalVideos}"
+        //holder.image.setImageResource(component.imageResId)
+        holder.name.text = component.MasterDataName
+        holder.description.text = component.MasterDataDescription
+        holder.totalVideos.text = "Total Videos: 3"//"Total Videos: ${component.totalVideos}"
 
         holder.btnView.setOnClickListener {
             // Handle button click (e.g., open video list)
