@@ -78,5 +78,6 @@ dependencies {
     implementation(libs.androidx.camera.video)
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.camera.extensions)
+    implementation ("com.android.volley:volley:1.2.1")
 
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,7 +41,14 @@ class ScanFragment : Fragment() {
         binding.btnPlayground.setOnClickListener {
             findNavController().navigate(R.id.playgroundFragment)
         }
-
+        binding.btnScanVideo.setOnClickListener{
+            Navigation.findNavController(binding.btnScanVideo)
+                .navigate(R.id.action_scanFragment_to_captureFragment)
+        }
+        binding.btnUploadVideo.setOnClickListener{
+            Navigation.findNavController(binding.btnUploadVideo)
+                .navigate(R.id.action_scanFragment_to_uploadFragment)
+            }
         return root
     }
 

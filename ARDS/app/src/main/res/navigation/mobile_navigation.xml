@@ -21,22 +21,32 @@
         android:id="@+id/navigation_history"
         android:name="com.ards.ui.history.HistoryFragment"
         android:label="@string/title_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history"/>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.ards.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment"/>
+    </fragment>
+
     <fragment
         android:id="@+id/navigation_scan"
         android:name="com.ards.ui.scan.ScanFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_scan" >
-
         <action
             android:id="@+id/scanFragment_to_playgroundFragment"
             app:destination="@id/playgroundFragment" />
+        <action
+            android:id="@+id/action_scanFragment_to_captureFragment"
+            app:destination="@id/navigation_capture"/>
+        <action
+            android:id="@+id/action_scanFragment_to_uploadFragment"
+            app:destination="@id/navigation_upload"/>
     </fragment>
 
     <fragment
@@ -56,5 +66,25 @@
         android:name="com.ards.ui.processed.ProcessedFragment"
         android:label="Playground Fragment"
         tools:layout="@layout/fragment_processed"/>
+
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.ards.ui.notification.NotificationListFragment"
+        android:label="@string/title_notification"
+        tools:layout="@layout/fragment_notification"/>
+
+
+    <fragment
+        android:id="@+id/navigation_capture"
+        android:name="com.ards.ui.capture.CaptureFragment"
+        android:label="@string/title_capture"
+        tools:layout="@layout/fragment_capture" />
+
+    <fragment
+        android:id="@+id/navigation_upload"
+        android:name="com.ards.ui.info.UploadInfoFragment"
+        android:label="@string/title_capture"
+        tools:layout="@layout/fragment_upload_info" />
 
 </navigation>

@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.ards.MainActivity
 import com.ards.databinding.ActivityOtpBinding
+import com.ards.sharedpreference.PreferenceHelper
 
 class OtpActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOtpBinding
@@ -43,6 +44,7 @@ class OtpActivity : AppCompatActivity() {
         verifyViewModel.verifyOTP(mobileNumber, otp).observe(this) { result ->
 
             result.onSuccess {
+                PreferenceHelper.putBoolean("isLoggedIn", true)
                 Toast.makeText(this, "OTP Verified Successfully", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
