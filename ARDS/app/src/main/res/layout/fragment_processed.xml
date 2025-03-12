@@ -71,8 +71,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFaultFrames"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:visibility="gone"
+            android:layout_height="100dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -108,39 +107,57 @@
                     android:padding="10dp"
                     >
 
-                    <TextView
-                        android:id="@+id/tvFaultPart"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textStyle="bold"
-                        android:text="Fault Part"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"/>
 
-                    <TextView
-                        android:id="@+id/tvTimeStamp"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Time-Stamp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:gravity="center"
-                        android:textSize="16sp"
-                        android:padding="5dp"/>
 
-                    <TextView
-                        android:id="@+id/btnEdit"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="Review"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:gravity="center"
-                        android:layout_height="30dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:layout_marginStart="10dp"/>
+                        <!-- Fault Part Name -->
+                        <TextView
+                            android:id="@+id/tvFaultPart"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textStyle="bold"
+                            android:text="Fault Part"
+                            android:textColor="@color/black"/>
+
+                        <!-- Fault Timestamp -->
+                        <TextView
+                            android:id="@+id/tvTimeStamp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Time-Stamp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:padding="5dp"/>
+
+                        <!-- Review Button -->
+                        <TextView
+                            android:id="@+id/btnReview"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="Review"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:layout_height="30dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:layout_marginStart="10dp"/>
+
+                        <!-- Edit Button (New) -->
+                        <TextView
+                            android:id="@+id/btnEditFault"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            android:text="Edit"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:layout_height="30dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:layout_marginStart="10dp"/>
+
+
                 </LinearLayout>
 
                 <View
@@ -165,6 +182,14 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

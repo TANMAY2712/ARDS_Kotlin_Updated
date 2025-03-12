@@ -19,7 +19,7 @@ class PlaygroundAdapter(
 
     class PlaygroundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle: TextView = itemView.findViewById(R.id.trainName)
-        val thumbnil: ImageView = itemView.findViewById(R.id.thumbnil)
+        val thumbnil: ImageView = itemView.findViewById(R.id.playerView)
 
         fun bind(playground: Playground, onItemClick: (Playground) -> Unit) {
             tvTitle.text = playground.title
@@ -30,8 +30,7 @@ class PlaygroundAdapter(
         private fun loadVideoThumbnail(videoUrl: String, imageView: ImageView) {
             val options = RequestOptions()
                 .frame(1000000) // Extract frame at 1 second
-                .placeholder(R.drawable.loader) // Show this while loading
-                .error(R.drawable.error) // Show this if loading fails
+
 
             Glide.with(imageView.context)
                 .setDefaultRequestOptions(options)

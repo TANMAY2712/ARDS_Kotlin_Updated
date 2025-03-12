@@ -123,6 +123,7 @@
                     android:indeterminate="true"
                     android:indeterminateTint="@color/purple_500"
                     android:elevation="10dp"
+                    android:layout_gravity="center_horizontal"
                     android:visibility="gone"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -2,10 +2,10 @@ package com.ards.ui.notification
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.ards.remote.ApiFactory
 import com.ards.remote.apimodel.NotificationListRequest
 import com.ards.remote.apimodel.NotificationListResponse
-import com.ards.remote.service.ArdsService
+import com.ards.remote.remote.ApiFactory
+import com.ards.remote.remote.service.ArdsService
 import com.ards.utils.Constant
 import retrofit2.Call
 import retrofit2.Callback

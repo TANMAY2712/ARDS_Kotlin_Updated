@@ -4,20 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.ards.R
-import com.ards.databinding.FragmentLibraryBinding
 import com.ards.databinding.FragmentScanBinding
-import com.ards.ui.history.adapter.HistoryAdapter
-import com.ards.ui.history.model.Recent
-import com.ards.ui.library.adapter.LibraryAdapter
-import com.ards.ui.library.model.Library
 
 class ScanFragment : Fragment() {
 
@@ -26,7 +18,6 @@ class ScanFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var libraryAdapter: LibraryAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,13 +33,17 @@ class ScanFragment : Fragment() {
             findNavController().navigate(R.id.playgroundFragment)
         }
         binding.btnScanVideo.setOnClickListener{
+            val bundle = Bundle()
+            bundle.putString("scan_type", "cameraxapi")
             Navigation.findNavController(binding.btnScanVideo)
-                .navigate(R.id.action_scanFragment_to_captureFragment)
+                .navigate(R.id.action_scanFragment_to_captureFragment, bundle)
         }
         binding.btnUploadVideo.setOnClickListener{
+            val bundle = Bundle()
+            bundle.putString("scan_type", "gallery")
             Navigation.findNavController(binding.btnUploadVideo)
-                .navigate(R.id.action_scanFragment_to_uploadFragment)
-            }
+                .navigate(R.id.action_scanFragment_to_uploadFragment, bundle)
+        }
         return root
     }
 

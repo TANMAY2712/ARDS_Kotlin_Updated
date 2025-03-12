@@ -42,7 +42,7 @@
             android:id="@+id/tvLibraryDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Overheating, cracks, oil leakage, bearing failure..."
+            android:text=""
             android:textSize="10sp"
             android:layout_marginLeft="10dp"
             android:textColor="@android:color/darker_gray"

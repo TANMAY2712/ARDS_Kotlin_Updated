@@ -2,23 +2,17 @@ package com.ards.ui.processed
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ards.databinding.FragmentProcessedBinding
-import com.ards.ui.playground.ProcessesViewModel
-import com.ards.ui.processed.adapter.FaultListAdapter
-import com.ards.ui.processed.model.FaultItem
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
 
 class ProcessedFragment : Fragment() {
 
@@ -26,8 +20,8 @@ class ProcessedFragment : Fragment() {
     private val binding get() = _binding!!
     private var player: ExoPlayer? = null
     private lateinit var overlayText: TextView
-    private lateinit var faultListAdapter: FaultListAdapter
-    private val viewModel: ProcessesViewModel by viewModels()
+  //  private lateinit var faultListAdapter: FaultListAdapter
+    private var url: String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -35,7 +29,7 @@ class ProcessedFragment : Fragment() {
         val root: View = binding.root
 
         overlayText = binding.tvOverlayText // Get the TextView reference
-
+        url = arguments?.getString("url")
         // Initialize ExoPlayer
         player = ExoPlayer.Builder(requireContext()).build()
         binding.playerView.player = player
@@ -49,11 +43,11 @@ class ProcessedFragment : Fragment() {
         player?.setPlaybackSpeed(0.5f)
         // Fault List with timestamps (Milliseconds)
 
-        setupRecyclerView()
+
 
         val dynamicApiUrl = "http://98.70.56.87:8085/model_inference?s3_path=uploads/65c612e57db39ec6eb44017c.mp4&train_no=0&station=0&rec_side=Right"
-        observeViewModel(dynamicApiUrl)
-
+        setupRecyclerView()
+        observeViewModel()
         // Monitor playback position
       //  monitorPlaybackPosition()
 
@@ -62,16 +56,19 @@ class ProcessedFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.rvFaultList.layoutManager = LinearLayoutManager(requireContext())
-        faultListAdapter = FaultListAdapter(emptyList()) { playground ->
-        }
-        binding.rvFaultList.adapter = faultListAdapter
+       /* faultListAdapter = FaultListAdapter(emptyList()) { playground ->
+        }*/
+     //   binding.rvFaultList.adapter = faultListAdapter
     }
 
-    private fun observeViewModel(apiUrl: String) {
-        viewModel.getPlaygroundList(apiUrl).observe(viewLifecycleOwner) { playgroundList ->
-            faultListAdapter.updateData(playgroundList)
-        }
+    private fun observeViewModel() {
+      /*  viewModel.faultList.observe(viewLifecycleOwner, Observer { videos ->
+            faultListAdapter.updateData(videos)
+        })*/
+
     }
+
+
 
    /* private fun monitorPlaybackPosition() {
         val handler = Handler(Looper.getMainLooper())

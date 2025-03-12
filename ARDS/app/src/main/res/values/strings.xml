@@ -8,5 +8,8 @@
     <string name="title_capture">Capture</string>
     <string name="continue_text">Continue</string>
     <string name="start_recording">Start Recording</string>
+    <string name="play">Play</string>
+    <string name="title_upload">Upload</string>
+    <string name="get_prediction">Get Prediction</string>
 
 </resources>

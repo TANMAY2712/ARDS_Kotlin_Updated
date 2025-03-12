@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ards.R
 import com.ards.remote.apimodel.NotificationListResponse
 import com.ards.ui.history.model.Recent
+import com.ards.utils.DateUtils
 
 class HistoryAdapter(
     private val context: Context,
@@ -39,12 +40,12 @@ class HistoryAdapter(
         holder.trainName.text = train.train_name
         holder.trainNo.text = train.train_number
         holder.trainRoute.text = train.station_name
-        holder.trainTime.text = train.createdDate
+        holder.trainTime.text = DateUtils.getAppDateFromApiDate(train.createdDate)
        // holder.from.text = train.from
        // holder.departure.text = train.departure
       //  holder.to.text = train.to
       //  holder.arrival.text = train.arrival
-        holder.faults.text = "5"//"Faults: ${train.faults}"
+        holder.faults.text = "Faults: "+"5"//"Faults: ${train.faults}"
     }
 
     override fun getItemCount(): Int = trainList.size

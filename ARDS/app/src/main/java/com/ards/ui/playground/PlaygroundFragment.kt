@@ -9,7 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ards.R
 import com.ards.databinding.FragmentPlaygroundBinding
 import com.ards.ui.playground.adapter.PlaygroundAdapter
 import com.bumptech.glide.Glide
@@ -37,7 +39,15 @@ class PlaygroundFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.rvTrainPlayground.layoutManager = LinearLayoutManager(requireContext())
         videoAdapter = PlaygroundAdapter(emptyList()) { video ->
-            Toast.makeText(requireContext(), "Processing ${video.title}", Toast.LENGTH_SHORT).show()
+            val bundle = Bundle().apply {
+                putString("video_url", video.object_url)
+                putString("url", video.fault_request)
+                putString("title", video.title)
+            }
+            Navigation.findNavController(binding.rvTrainPlayground)
+                .navigate(R.id.playgroundDetailsFragment,bundle)
+
+           // Toast.makeText(requireContext(), "Processing ${video.title}", Toast.LENGTH_SHORT).show()
         }
         binding.rvTrainPlayground.adapter = videoAdapter
     }

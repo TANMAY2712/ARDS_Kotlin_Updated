@@ -32,9 +32,10 @@ interface ArdsService {
 
     @GET("videos") // Replace with actual endpoint
     fun getVideos(): Call<List<Playground>>
-    @GET
-    fun getPlayground(@Url fullUrl: String): Call<List<Playground>>
-
+   /* @GET("model_inference?s3_path=uploads/65c612e57db39ec6eb44017c.mp4&train_no=0&station=0&rec_side=Right") // Replace with actual endpoint
+    fun getPlayground(): Call<List<FaultResponse>>*/
+   /* @GET
+    fun getPlayground(@Url fullUrl: String): Call<List<FaultResponse>>*/
     @POST(Constant.ApiEndPoint.NotificationFault)
     fun getNotificationFaultList(@Body request: NotificationFaultListRequest): Call<NotificationFaultListResponse>
 

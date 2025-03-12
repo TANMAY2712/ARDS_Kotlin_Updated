@@ -15,7 +15,22 @@
         android:id="@+id/navigation_library"
         android:name="com.ards.ui.library.LibraryFragment"
         android:label="@string/title_library"
-        tools:layout="@layout/fragment_library" />
+        tools:layout="@layout/fragment_library">
+        <action
+            android:id="@+id/action_libraryFragment_to_videoFragment"
+            app:destination="@id/libVideoFragment"/>
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/libVideoFragment"
+        android:name="com.ards.ui.libvideo.LibVideoFragment"
+        android:label="@string/title_history"
+        tools:layout="@layout/fragment_libvideo">
+        <action
+            android:id="@+id/libVideoFragment_to_processedFragment"
+            app:destination="@id/processedFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_history"
@@ -43,10 +58,10 @@
             app:destination="@id/playgroundFragment" />
         <action
             android:id="@+id/action_scanFragment_to_captureFragment"
-            app:destination="@id/navigation_capture"/>
+            app:destination="@id/navigation_info"/>
         <action
             android:id="@+id/action_scanFragment_to_uploadFragment"
-            app:destination="@id/navigation_upload"/>
+            app:destination="@id/navigation_info"/>
     </fragment>
 
     <fragment
@@ -62,8 +77,26 @@
     </fragment>
 
     <fragment
+        android:id="@+id/playgroundDetailsFragment"
+        android:name="com.ards.ui.playground.PlaygroundDetailsFragment"
+        android:label="Playground Details Fragment"
+        tools:layout="@layout/fragment_playground_details">
+
+        <action
+            android:id="@+id/playgroundFragment_to_processedFragment"
+            app:destination="@id/playgroundDetailsFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/processedFragment"
         android:name="com.ards.ui.processed.ProcessedFragment"
+        android:label="Playground Fragment"
+        tools:layout="@layout/fragment_processed"/>
+
+    <fragment
+        android:id="@+id/processedsFragment"
+        android:name="ProcessedsFragment"
         android:label="Playground Fragment"
         tools:layout="@layout/fragment_processed"/>
 
@@ -82,9 +115,22 @@
         tools:layout="@layout/fragment_capture" />
 
     <fragment
-        android:id="@+id/navigation_upload"
+        android:id="@+id/navigation_info"
         android:name="com.ards.ui.info.UploadInfoFragment"
         android:label="@string/title_capture"
-        tools:layout="@layout/fragment_upload_info" />
+        tools:layout="@layout/fragment_upload_info">
+        <action
+            android:id="@+id/action_trainInfoFragment_to_captureFragment"
+            app:destination="@id/navigation_capture"/>
+        <action
+            android:id="@+id/action_trainInfoFragment_to_uploadFragment"
+            app:destination="@id/navigation_upload"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_upload"
+        android:name="com.ards.ui.upload.UploadFrament"
+        android:label="@string/title_upload"
+        tools:layout="@layout/fragment_upload" />
 
 </navigation>

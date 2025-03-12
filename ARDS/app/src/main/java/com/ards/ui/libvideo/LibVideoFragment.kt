@@ -1,4 +1,4 @@
-package com.ards.ui.library
+package com.ards.ui.libvideo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,31 +13,38 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.ards.R
 import com.ards.databinding.FragmentLibraryBinding
 import com.ards.ui.library.adapter.LibraryAdapter
+import com.ards.ui.libvideo.adapter.LibVideoAdapter
 
-class LibraryFragment : Fragment() {
+class LibVideoFragment : Fragment() {
 
     private var _binding: FragmentLibraryBinding? = null
-
+    private lateinit var Cnumber: String
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val libraryViewModel: LibraryViewModel by viewModels()
-    private lateinit var libraryAdapter: LibraryAdapter
+    private val libraryViewModel: LibVideoViewModel by viewModels()
+    private lateinit var libraryAdapter: LibVideoAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(LibraryViewModel::class.java)
+            ViewModelProvider(this).get(LibVideoViewModel::class.java)
 
         _binding = FragmentLibraryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        if (arguments != null) {
+            Cnumber = requireArguments().getString("category_id_key")!!
+        }
+
         libraryViewModel.isLoading.observe(requireActivity()) { isLoading ->
             binding.libraryProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
-        getLibrary("LibraryCategory",0)
+        if(Cnumber.isNotEmpty()) {
+            getVideoBycategory(Cnumber)
+        }
 
         /*binding.rvTrainLibrary.layoutManager = GridLayoutManager(requireContext(), 1)
 
@@ -59,24 +66,23 @@ class LibraryFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    private fun getLibrary(type: String, Id: Int) {
-        libraryViewModel.getLibrary(type, Id)
+    private fun getVideoBycategory(catgoryId: String) {
+        libraryViewModel.getVideoBycategory(catgoryId)
             .observe(viewLifecycleOwner) { result ->
 
-                result.onSuccess { notifications ->
+                result.onSuccess { videos ->
                     // Setting up RecyclerView
                     binding.rvTrainLibrary.layoutManager = GridLayoutManager(requireContext(), 1)
-                    libraryAdapter = LibraryAdapter(requireContext(), notifications.Data, object : LibraryAdapter.Callback {
+                    libraryAdapter = LibVideoAdapter(requireContext(), videos.Data, object : LibVideoAdapter.Callback {
                         override fun onItemClicked(
-                            catId: Int
+                            videoUrl: String
                         ) {
                             val bundle = Bundle()
-                            bundle.putString("category_id_key", catId.toString())
+                            bundle.putString("category_id_key", videoUrl)
                             Navigation.findNavController(binding.rvTrainLibrary)
-                                .navigate(R.id.action_libraryFragment_to_videoFragment, bundle)
+                                .navigate(R.id.libVideoFragment_to_processedFragment, bundle)
                         }
                     })
-
                     binding.rvTrainLibrary.adapter = libraryAdapter
                 }
 

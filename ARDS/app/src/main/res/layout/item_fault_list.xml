@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:gravity="center"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="10dp">
@@ -34,27 +35,38 @@
         android:gravity="center">
 
         <!-- Correct Button -->
-        <ImageButton
+        <ImageView
             android:id="@+id/btnCorrect"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_correct"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:tint="@color/gray"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Correct"
             android:layout_marginEnd="5dp"
             tools:ignore="UseAppTint" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btnWrong"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_wrong"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:tint="@color/gray"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Wrong"
             tools:ignore="UseAppTint" />
 
+
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:src="@drawable/comment"
+        android:gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Correct"
+        android:layout_marginEnd="5dp"
+        tools:ignore="UseAppTint" />
+
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.ards.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ards.R
 import com.ards.databinding.FragmentHistoryBinding
 import com.ards.databinding.FragmentProfileBinding
+import com.ards.sharedpreference.PreferenceHelper
+import com.ards.ui.login.LoginActivity
 import com.ards.ui.profile.adapter.ProfileMenuAdapter
 import com.ards.ui.profile.model.MenuItem
 
@@ -46,6 +49,17 @@ class ProfileFragment : Fragment() {
         val adapter = ProfileMenuAdapter(menuItems)
         binding.recyclerMenu.layoutManager = LinearLayoutManager(context)
         binding.recyclerMenu.adapter = adapter
+
+        binding.btnLogout.setOnClickListener {
+            PreferenceHelper.clear()
+            val intent = Intent(activity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+            // Close the parent activity
+            activity?.finish()
+
+        }
 
         return root
     }
