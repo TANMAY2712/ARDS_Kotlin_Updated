@@ -58,9 +58,9 @@ class HistoryFragment : Fragment() {
                             notificationId: Int
                         ) {
                             val bundle = Bundle()
-                            bundle.putInt("category_id_key", notificationId)
+                            bundle.putInt("notification_id_key", notificationId)
                             Navigation.findNavController(binding.rvTrainHistory)
-                                .navigate(R.id.libVideoFragment_to_processedFragment, bundle)
+                                .navigate(R.id.uploadFragment_to_predictFragment, bundle)
                         }
                     })
                     binding.rvTrainHistory.adapter = historyAdapter

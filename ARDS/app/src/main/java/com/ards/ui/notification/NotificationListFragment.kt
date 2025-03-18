@@ -38,6 +38,9 @@ class NotificationListFragment : Fragment() {
             binding.notificationProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
         getAllNotification("",0,92597)
+        binding.btnBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
         return root
     }
 

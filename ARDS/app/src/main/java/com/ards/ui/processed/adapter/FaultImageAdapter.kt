@@ -5,6 +5,11 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ards.R
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class FaultImageAdapter(
     private val imageList: List<Fault>,
@@ -37,6 +42,11 @@ class FaultImageAdapter(
                 faultImage.background = null
             }
 
+            Glide.with(faultImage.context)
+                .load(faultItem.imageUrl)
+                .apply(RequestOptions().fitCenter()) // Ensures the image fits while maintaining aspect ratio
+                .into(faultImage)
+
             faultImage.setOnClickListener {
                 val previousSelected = selectedPosition
                 selectedPosition = bindingAdapterPosition
@@ -46,10 +56,23 @@ class FaultImageAdapter(
                 notifyItemChanged(selectedPosition)
 
                 faultItem.faultTimestamp?.let { faultTimestamp ->
-                    onTimestampClick(faultTimestamp) // Seek video to timestamp
+                    val faultTimestam = faultTimestamp ?: "00:00:00"
+                    val faultTime = convertFaultTimestamp(faultTimestam)
+                    onTimestampClick(faultTime) // Seek video to timestamp
                 }
                 onImageClick(position) // Highlight corresponding item in FaultAdapter
             }
+        }
+    }
+    fun convertFaultTimestamp(faultTimestamp: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("mm:ss.SSS", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+
+            val date = inputFormat.parse(faultTimestamp)
+            outputFormat.format(date ?: Date(0)) // Default to "00:00:00" if parsing fails
+        } catch (e: Exception) {
+            "00:00:00" // Return a default value in case of an error
         }
     }
     fun highlightImage(position: Int) {

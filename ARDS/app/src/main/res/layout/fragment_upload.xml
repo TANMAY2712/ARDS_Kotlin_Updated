@@ -60,6 +60,44 @@
             android:textSize="18sp"
             android:visibility="gone" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/gifLoaderContainer"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topBarContainer"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/gifLoader"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/train_loader"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/loadingText"/>
+
+            <TextView
+                android:id="@+id/loadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please wait while we Process..."
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/gifLoader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <ProgressBar
             android:id="@+id/upload_video_progress"
             android:layout_width="60dp"
@@ -68,7 +106,7 @@
             android:indeterminateTint="@color/purple_500"
             android:elevation="10dp"
             android:layout_gravity="center_horizontal"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

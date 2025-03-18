@@ -1,10 +1,10 @@
 package com.ards.ui.capture
 
 import android.Manifest
-import android.R
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
@@ -12,18 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.FileOutputOptions
-import androidx.camera.video.Quality
-import androidx.camera.video.QualitySelector
-import androidx.camera.video.Recorder
-import androidx.camera.video.Recording
-import androidx.camera.video.VideoCapture
-import androidx.camera.video.VideoRecordEvent
+import androidx.camera.video.*
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -39,12 +31,17 @@ class CaptureFragment : Fragment() {
 
     private var _binding: FragmentCaptureBinding? = null
     private val binding get() = _binding!!
-    var selected_quality: String = ""
-    private var selectedFps: Int = 30
+
     private var videoCapture: VideoCapture<Recorder>? = null
     private var recording: Recording? = null
-    private var selectedQuality: Quality = Quality.FHD // Default quality
+    private var selectedQuality: Quality = Quality.FHD
     private lateinit var cameraExecutor: ExecutorService
+
+    private var isRecording = false
+    private var isPaused = false
+    private var recordingTime = 0 // Time in seconds
+    private val handler = Handler(Looper.getMainLooper())
+
     private val requiredPermissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
 
     override fun onCreateView(
@@ -52,27 +49,21 @@ class CaptureFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(ScanViewModel::class.java)
+        val dashboardViewModel = ViewModelProvider(this).get(ScanViewModel::class.java)
 
         _binding = FragmentCaptureBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        // Request permissions
+
         if (allPermissionsGranted()) {
             startCamera()
         } else {
             ActivityCompat.requestPermissions(requireActivity(), requiredPermissions, 10)
         }
 
-        binding.btnRecord.setOnClickListener {
-            if (recording != null) {
-                stopRecording()
-            } else {
-                startRecording()
-            }
-        }
+        setupButtons()
         setupFpsSpinner()
         setupQualitySpinner()
+
         cameraExecutor = Executors.newSingleThreadExecutor()
         return root
     }
@@ -89,26 +80,64 @@ class CaptureFragment : Fragment() {
         }
     }
 
-    private fun setupFpsSpinner() {
+    private fun setupButtons() {
+        binding.btnStart.setOnClickListener {
+            if (!isRecording) {
+                startRecording()
+            }
+        }
 
-        val fpsOptions = listOf("15", "24", "30", "60") // Available FPS values
+        binding.btnPause.setOnClickListener {
+            pauseRecording()
+        }
+
+        binding.btnStop.setOnClickListener {
+            stopRecording()
+        }
+    }
+
+    private fun setupFpsSpinner() {
+        val fpsOptions = listOf("15", "24", "30", "60")
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, fpsOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
         binding.spinnerFps.adapter = adapter
 
         binding.spinnerFps.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                selectedFps = fpsOptions[position].toInt()
-                restartCameraWithNewFps() // Restart camera when FPS changes
+                restartCamera()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
-    private fun restartCameraWithNewFps() {
+    private fun setupQualitySpinner() {
+        val qualityOptions = listOf("SD", "HD", "FULL HD", "4K")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, qualityOptions)
+        binding.spinnerQuality.adapter = adapter
+
+        binding.spinnerQuality.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedQuality = getQuality(qualityOptions[position])
+                restartCamera()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun restartCamera() {
         startCamera()
+    }
+
+    private fun getQuality(quality: String): Quality {
+        return when (quality) {
+            "SD" -> Quality.SD
+            "HD" -> Quality.HD
+            "FULL HD" -> Quality.FHD
+            "4K" -> Quality.UHD
+            else -> Quality.FHD
+        }
     }
 
     private fun startCamera() {
@@ -118,16 +147,11 @@ class CaptureFragment : Fragment() {
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
             val preview = androidx.camera.core.Preview.Builder()
-                .setTargetResolution(Size(1280, 720)) // Adjust resolution if needed
+                .setTargetResolution(Size(1280, 720))
                 .build()
                 .also { it.setSurfaceProvider(binding.viewFinder.surfaceProvider) }
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-            // Get user selection
-            //val selectedFps = spinnerFps.selectedItem.toString()
-            selected_quality = binding.spinnerQuality.selectedItem?.toString() ?: "HD" // Default to HD
-            //val selectedQuality = getQualitySelector(selected_quality)
             val qualitySelector = QualitySelector.from(selectedQuality)
             val recorder = Recorder.Builder()
                 .setQualitySelector(qualitySelector)
@@ -144,41 +168,11 @@ class CaptureFragment : Fragment() {
         }, ContextCompat.getMainExecutor(requireActivity()))
     }
 
-    private fun setupQualitySpinner() {
-        val qualityOptions = listOf("SD", "HD", "FULL HD", "4K") // Available video qualities
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, qualityOptions)
-        binding.spinnerQuality.adapter = adapter
-
-        binding.spinnerQuality.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                selectedQuality = getQualitySelector(qualityOptions[position])
-                restartCameraWithNewQuality()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-    }
-
-    private fun restartCameraWithNewQuality() {
-        startCamera()
-    }
-    private fun getQualitySelector(quality: String): Quality {
-        return when (quality) {
-            "SD" -> Quality.SD
-            "HD" -> Quality.HD
-            "FULL HD" -> Quality.FHD
-            "4K" -> Quality.UHD
-            else -> Quality.FHD // Default to Full HD
-        }
-    }
-
-
     private fun startRecording() {
         val file = File(requireContext().externalMediaDirs.firstOrNull(), "ards_${System.currentTimeMillis()}.mp4")
         val outputOptions = FileOutputOptions.Builder(file).build()
 
         val recorder = videoCapture?.output ?: return
-
         val pendingRecording = recorder.prepareRecording(requireActivity(), outputOptions)
 
         recording = pendingRecording.start(ContextCompat.getMainExecutor(requireActivity())) { event ->
@@ -188,17 +182,67 @@ class CaptureFragment : Fragment() {
                 } else {
                     Log.e("CameraX", "Error: ${event.error}")
                 }
-                recording = null
-                binding.btnRecord.text = "Start Recording"
+                resetUI()
             }
         }
 
-        binding.btnRecord.text = "Stop Recording"
+        isRecording = true
+        isPaused = false
+        recordingTime = 0
+        updateTimer()
+        handler.post(timerRunnable)
+        updateUI()
+    }
+
+    private fun pauseRecording() {
+        if (!isPaused) {
+            recording?.pause()
+            isPaused = true
+            handler.removeCallbacks(timerRunnable)
+            binding.btnPause.text = "Resume"
+        } else {
+            recording?.resume()
+            isPaused = false
+            handler.post(timerRunnable)
+            binding.btnPause.text = "Pause"
+        }
     }
 
     private fun stopRecording() {
         recording?.stop()
         recording = null
-        binding.btnRecord.text = "Start Recording"
+        resetUI()
+    }
+
+    private fun updateUI() {
+        binding.btnStart.isEnabled = !isRecording
+        binding.btnPause.isEnabled = isRecording
+        binding.btnStop.isEnabled = isRecording
+    }
+
+    private fun resetUI() {
+        isRecording = false
+        isPaused = false
+        recordingTime = 0
+        binding.tvTimer.text = "00:00"
+        handler.removeCallbacks(timerRunnable)
+        binding.btnPause.text = "Pause"
+        updateUI()
+    }
+
+    private fun updateTimer() {
+        val minutes = recordingTime / 60
+        val seconds = recordingTime % 60
+        binding.tvTimer.text = String.format("%02d:%02d", minutes, seconds)
+    }
+
+    private val timerRunnable = object : Runnable {
+        override fun run() {
+            if (!isPaused) {
+                recordingTime++
+                updateTimer()
+            }
+            handler.postDelayed(this, 1000)
+        }
     }
 }

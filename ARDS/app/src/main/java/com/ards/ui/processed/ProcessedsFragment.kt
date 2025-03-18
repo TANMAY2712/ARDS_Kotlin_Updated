@@ -1,3 +1,4 @@
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.ards.MainActivity
 import com.ards.databinding.FragmentProcessedBinding
+import com.ards.sharedpreference.PreferenceHelper
+import com.ards.ui.login.LoginActivity
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import java.text.SimpleDateFormat
@@ -89,6 +93,7 @@ class ProcessedsFragment : Fragment() {
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+
         return view
     }
 

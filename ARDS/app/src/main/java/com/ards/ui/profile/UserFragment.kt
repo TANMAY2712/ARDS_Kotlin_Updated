@@ -1,6 +1,7 @@
 package com.ards.ui.profile
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.ards.R
 import com.ards.databinding.FragmentUserBinding
 import com.ards.remote.apimodel.MasterDataResponse
 import com.ards.sharedpreference.PreferenceHelper
+import com.ards.utils.ArdsConstant
 import com.ards.utils.DateUtils
 import com.ards.utils.PermissionManagerUtils
 import java.io.File
@@ -95,6 +97,30 @@ class UserFragment : Fragment(), PermissionManagerUtils.PermissionCallback {
             calender()
         }
 
+        binding.update.setOnClickListener {
+            if (selectedzoneName != null) {
+                PreferenceHelper.getInstance(requireContext()).setUserZoneName(selectedzoneName!!)
+                PreferenceHelper.getInstance(requireContext()).setUserZoneID(selectedzone)
+            }
+            if (selecteddivisionName != null) {
+                PreferenceHelper.getInstance(requireContext()).setUserDivisionName(selecteddivisionName!!)
+                PreferenceHelper.getInstance(requireContext()).setUserDivisionID(selecteddivision)
+            }
+            if (selectedbranchName != null) {
+                PreferenceHelper.getInstance(requireContext()).setUserBranchName(selectedbranchName!!)
+                PreferenceHelper.getInstance(requireContext()).setUserBranchID(selectedidbranch)
+            }
+            updateall(
+                binding.name.text.toString(),
+                binding.officeaddress.text.toString(),
+                selectZoneId,
+                selectDivisionId,
+                binding.dob.toString(),
+                PreferenceHelper.getInstance(requireContext()).getUserName,
+                "91",
+                PreferenceHelper.getInstance(requireContext()).getAuthToken)
+        }
+
         //binding.tvZone.setOnClickListener {
             getUnionmaster("zone", PreferenceHelper.getInstance(requireContext()).getParentId, "")
         //}
@@ -104,6 +130,39 @@ class UserFragment : Fragment(), PermissionManagerUtils.PermissionCallback {
         //}
 
         return root
+    }
+
+    private fun updateall(
+        name: String,
+        address: String,
+        zoneId: Int,
+        DivisionId: Int,
+        dob: String,
+        Username: String,
+        CountryCode:String,
+        AuthToken:String
+    ) {
+        userViewModel.updateUserProfile(
+            name,
+            address,
+            zoneId,
+            DivisionId,
+            dob,
+            Username,
+            CountryCode,
+            AuthToken
+        )
+            .observe(viewLifecycleOwner) { result ->
+
+                result.onSuccess { union ->
+                    // Setting up RecyclerView
+                    ArdsConstant.showShortToast(union.SuccessMessage.toString(), requireContext())
+                }
+
+                result.onFailure { error ->
+                    Toast.makeText(requireContext(), "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
     private fun calender() {

@@ -14,172 +14,160 @@
         android:layout_height="match_parent"
         android:src="@drawable/map"
         android:scaleType="fitXY"
+        android:windowSoftInputMode="adjustResize"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Bottom Card View -->
-    <androidx.cardview.widget.CardView
+    <!-- ScrollView to handle keyboard scrolling -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <!-- Station -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Station : "
-                    android:padding="2dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-                <!--<EditText
-                    android:id="@+id/station_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="New Delhi"
-                    android:background="@null"
-                    android:padding="2dp"
-                    android:textSize="14sp"/>-->
-                <Spinner
-                    android:id="@+id/spinner_station_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:padding="2dp"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="@color/black"/>
-
-            <!-- Station Code -->
+            android:layout_margin="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Station Code : "
-                    android:padding="2dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-                <TextView
-                    android:id="@+id/station_code"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Station -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:padding="2dp"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Station : "
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                    <Spinner
+                        android:id="@+id/spinner_station_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:padding="2dp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="@color/black"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@color/black"/>
 
-            <!-- Train Number -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Train Number : "
-                    android:padding="2dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-                <EditText
-                    android:id="@+id/train_number"
+                <!-- Station Code -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="12397"
-                    android:inputType="number"
-                    android:background="@null"
-                    android:padding="2dp"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Station Code : "
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/station_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:padding="2dp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="@color/black"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@color/black"/>
 
-            <!-- Scan Side -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Scan Side : "
-                    android:padding="2dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-                <Spinner
-                    android:id="@+id/spn_scan_side"
+                <!-- Train Number -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:padding="2dp"
-                    android:textSize="14sp"/>
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Train Number : "
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                    <EditText
+                        android:id="@+id/train_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Train Number"
+                        android:inputType="number"
+                        android:background="@null"
+                        android:padding="2dp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@color/black"/>
+
+                <!-- Scan Side -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Scan Side : "
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                    <Spinner
+                        android:id="@+id/spn_scan_side"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:padding="2dp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <!-- Continue Button -->
+                <Button
+                    android:id="@+id/continue_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Continue"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:backgroundTint="@color/purple_500"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="16dp"/>
             </LinearLayout>
-
-
-            <!-- Continue Button -->
-            <Button
-                android:id="@+id/continue_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Continue"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:backgroundTint="@color/purple_500"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="16dp"/>
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

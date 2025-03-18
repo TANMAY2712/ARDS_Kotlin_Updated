@@ -4,7 +4,7 @@ import org.json.JSONObject
 
 data class PredictFaultResponces(val data: PredictFaultData, val statusCode: Int) {
     constructor(json: JSONObject) : this(
-        PredictFaultData(json.optJSONObject("data") ?: JSONObject()),
+        PredictFaultData(json.optJSONObject("Data") ?: JSONObject()),
         json.optInt("statusCode", 0) // ✅ Default value if statusCode is missing
     )
 }

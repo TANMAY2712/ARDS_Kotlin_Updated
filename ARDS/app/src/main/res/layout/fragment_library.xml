@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,30 +8,23 @@
     android:padding="16dp">
 
     <!-- Back Button -->
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="Back Button"
-        tools:ignore="MissingConstraints" />
 
-    <!-- Title -->
+    <!-- Title (Centered) -->
     <TextView
         android:id="@+id/tvHistoryTitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Library"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:gravity="center"
-        app:layout_constraintStart_toEndOf="@id/btnBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btnBack"
-        app:layout_constraintBottom_toBottomOf="@id/btnBack" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rvTrainLibrary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Vertical RecyclerView (Main Library List) -->
+    <!-- Main Library List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTrainLibrary"
         android:layout_width="match_parent"
@@ -43,15 +37,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/rvTrainLibraryHorizontal" />
 
-    <!-- Vertical RecyclerView (Bottom List) -->
+    <!-- Bottom List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTrainLibraryHorizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        tools:itemCount="3"
-        tools:listitem="@layout/library_item"
         app:layout_constraintTop_toBottomOf="@id/rvTrainLibrary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

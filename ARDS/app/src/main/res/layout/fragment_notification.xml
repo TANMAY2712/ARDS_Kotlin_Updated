@@ -9,6 +9,8 @@
     <ImageView
         android:id="@+id/btnBack"
         android:layout_width="50dp"
+        android:padding="10dp"
+        android:src="@drawable/back"
         android:layout_height="50dp"
         tools:ignore="MissingConstraints" />
 

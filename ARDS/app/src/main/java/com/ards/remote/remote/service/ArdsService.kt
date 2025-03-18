@@ -20,6 +20,8 @@ import com.ards.remote.apimodel.NotificationListResponse
 import com.ards.remote.apimodel.PreSignedUrlResponse
 import com.ards.remote.apimodel.SignInRequest
 import com.ards.remote.apimodel.SignInResponse
+import com.ards.remote.apimodel.UserProfileRequest
+import com.ards.remote.apimodel.UserProfileResponse
 import com.ards.remote.apimodel.VideoByCategoryRequest
 import com.ards.remote.apimodel.VideoByCategoryResponse
 import com.ards.utils.ArdsConstant
@@ -59,7 +61,7 @@ interface ArdsService {
     fun masterData(@Body request: MasterDataRequest): Call<MasterDataResponse>
 
     @POST(ArdsConstant.ApiEndPoint.UserProfile)
-    fun updateUserProfile(@Body request: MasterDataRequest): Call<MasterDataResponse>
+    fun updateUserProfile(@Body request: UserProfileRequest): Call<UserProfileResponse>
 
     @POST(ArdsConstant.ApiEndPoint.VideoByCategory)
     fun getVideoByCategory(@Body request: VideoByCategoryRequest): Call<VideoByCategoryResponse>
@@ -84,5 +86,7 @@ interface ArdsService {
         @Query("rec_side") recSide: String,
         @Query("s3_path") s3Path: String
     ): Call<ModelInferenceResponse>
+
+
 
 }

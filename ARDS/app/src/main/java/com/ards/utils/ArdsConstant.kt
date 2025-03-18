@@ -10,6 +10,7 @@ class ArdsConstant {
         val PREDICTION_BASE_URL = "http://98.70.56.87:8085/"
         val WUS_ROOMDB = "wusARDSDB.db"
         val ARDS_APIKEY = "AR-AUG-ARST-BIZBR-2019OLLY"
+        val ARDS_BASE_URL = "https://dev.workerunionsupport.com/api/ToolKit/GetNotificationFaultUpdaedList"
         const val MOBILE = "mobile"
 
         const val EncryptedSharedPreferencesKey = "WUS"

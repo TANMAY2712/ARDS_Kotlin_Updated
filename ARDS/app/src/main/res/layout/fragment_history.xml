@@ -32,6 +32,7 @@
         android:id="@+id/etSearch"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:visibility="gone"
         android:hint="Train No./ Name...."
         android:background="@drawable/search_bg"
         android:drawableEnd="@drawable/search"

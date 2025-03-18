@@ -46,7 +46,13 @@
         android:id="@+id/navigation_history"
         android:name="com.ards.ui.history.HistoryFragment"
         android:label="@string/title_history"
-        tools:layout="@layout/fragment_history"/>
+        tools:layout="@layout/fragment_history">
+
+        <action
+            android:id="@+id/uploadFragment_to_predictFragment"
+            app:destination="@id/navigation_predictFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
@@ -148,7 +154,7 @@
 
     <fragment
         android:id="@+id/navigation_upload"
-        android:name="com.ards.ui.upload.UploadFrament"
+        android:name="com.ards.ui.upload.UploadFragment"
         android:label="@string/title_upload"
         tools:layout="@layout/fragment_upload">
         <action  android:id="@+id/uploadFragment_to_predictFragment"
