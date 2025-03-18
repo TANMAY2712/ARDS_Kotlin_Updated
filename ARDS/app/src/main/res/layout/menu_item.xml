@@ -5,6 +5,7 @@
     android:orientation="horizontal"
     android:paddingVertical="12dp"
     android:paddingHorizontal="16dp"
+    android:id="@+id/itemMenuList"
     android:background="?attr/selectableItemBackground">
 
     <!-- Icon -->

@@ -21,13 +21,13 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        PreferenceHelper.init(this)
+        PreferenceHelper.getInstance(this)
         enableEdgeToEdge()
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Handler(Looper.getMainLooper()).postDelayed({
-            val isLoggedIn = PreferenceHelper.getBoolean("isLoggedIn", false)
+            val isLoggedIn = PreferenceHelper.getInstance(this).getBoolean("isLoggedIn",false)
 
             if (isLoggedIn) {
                 startActivity(Intent(this, MainActivity::class.java))

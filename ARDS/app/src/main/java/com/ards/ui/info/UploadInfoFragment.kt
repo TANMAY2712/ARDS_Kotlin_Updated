@@ -2,6 +2,7 @@ package com.ards.ui.info
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -11,6 +12,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -20,7 +23,8 @@ import androidx.navigation.Navigation
 import com.ards.R
 import com.ards.databinding.FragmentUploadInfoBinding
 import com.ards.ui.scan.ScanViewModel
-import com.ards.utils.Constant
+import com.ards.utils.ArdsConstant
+import java.io.File
 
 class UploadInfoFragment : Fragment() {
 
@@ -30,6 +34,8 @@ class UploadInfoFragment : Fragment() {
     private val PICK_VIDEO_REQUEST = 100
     private val STORAGE_PERMISSION_REQUEST = 101
     private var videoUri: Uri? = null
+    private var stationName: String = ""
+    private var sidePosition: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,10 +52,65 @@ class UploadInfoFragment : Fragment() {
             type = requireArguments().getString("scan_type")!!
         }
 
+        val sideList = listOf("Select Side", "Left", "Right")
+
+        val adapterSide = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, sideList)
+        binding.spnScanSide.adapter = adapterSide
+        binding.spnScanSide.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val side = sideList[position]
+                if (position != 0) {
+                    sidePosition =  side
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Do nothing
+            }
+        }
+
+
+        val cityList = listOf("Select Station", "New Delhi", "Mumbai Central", "Howrah Junction", "Chennai Central", "Varanasi Junction", "Bangalore City", "Lucknow Charbagh")
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, cityList)
+        binding.spinnerStationName.adapter = adapter
+        binding.spinnerStationName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedCity = cityList[position]
+                if (position != 0) { // Avoid selecting "Select City" as a choice
+                    //tvSelectedCity.text =
+                    stationName =  selectedCity
+                    if(stationName.equals("New Delhi")){
+                        binding.stationCode.text="NDLS"
+                    }
+                    else if(stationName.equals("Mumbai Central")){
+                        binding.stationCode.text="MMCT"
+                    }
+                    else if(stationName.equals("Howrah Junction")){
+                        binding.stationCode.text="HWH"
+                    }
+                    else if(stationName.equals("Chennai Central")){
+                        binding.stationCode.text="MAS"
+                    }
+                    else if(stationName.equals("Varanasi Junction")){
+                        binding.stationCode.text="BSB"
+                    }
+                    else if(stationName.equals("Bangalore City")){
+                        binding.stationCode.text="SBC"
+                    }
+                    else if(stationName.equals("Lucknow Charbagh")){
+                        binding.stationCode.text="LKO"
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Do nothing
+            }
+        }
 
         binding.continueButton.setOnClickListener {
-            if (binding.trainNumber.text.isNotEmpty() && binding.scanSide.text.isNotEmpty()
-                && binding.stationCode.text.isNotEmpty() && binding.stationName.text.isNotEmpty()
+            if (binding.trainNumber.text.isNotEmpty() && sidePosition.isNotEmpty()
+                && binding.stationCode.text.isNotEmpty() && stationName.isNotEmpty()
             ) {
                 if (type.equals("cameraxapi")) {
                     Navigation.findNavController(binding.continueButton)
@@ -62,10 +123,9 @@ class UploadInfoFragment : Fragment() {
                     }
                 }
             } else {
-                Constant.showShortToast("Please enter required fields first.", requireContext())
+                ArdsConstant.showShortToast("Please enter required fields first.", requireContext())
             }
         }
-
         return root
     }
 
@@ -125,15 +185,23 @@ class UploadInfoFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_VIDEO_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             videoUri = data.data
+            //val file = new File(videoUri?.getPath())
+            val file = getFileFromUri(requireContext(), videoUri!!)
             val bundle = Bundle()
             bundle.putString("videoUri_key", videoUri.toString())
             Navigation.findNavController(binding.continueButton)
                 .navigate(R.id.action_trainInfoFragment_to_uploadFragment, bundle)
-            Toast.makeText(requireActivity(), "Video Selected: $videoUri", Toast.LENGTH_SHORT)
-                .show()
         }
     }
 
+    fun getFileFromUri(context: Context, uri: Uri): File {
+        val inputStream = context.contentResolver.openInputStream(uri)!!
+        val tempFile = File.createTempFile("ards_video", ".mp4", context.cacheDir)
+        tempFile.outputStream().use { outputStream ->
+            inputStream.copyTo(outputStream)
+        }
+        return tempFile
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

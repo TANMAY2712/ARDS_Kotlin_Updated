@@ -7,7 +7,7 @@ import com.ards.remote.apimodel.NotificationListRequest
 import com.ards.remote.apimodel.NotificationListResponse
 import com.ards.remote.remote.ApiFactory
 import com.ards.remote.remote.service.ArdsService
-import com.ards.utils.Constant
+import com.ards.utils.ArdsConstant
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,7 +18,7 @@ class HistoryRepository {
     fun getHistory(trainNo: String, pageNo: Int, userId: Int): LiveData<Result<NotificationListResponse>> {
         val liveData = MutableLiveData<Result<NotificationListResponse>>()
 
-        val call = apiService.getAllNotification(NotificationListRequest(Constant.ARDS_APIKEY, trainNo, pageNo, userId))
+        val call = apiService.getAllNotification(NotificationListRequest(ArdsConstant.ARDS_APIKEY, trainNo, pageNo, userId))
         call.enqueue(object : Callback<NotificationListResponse> {
             override fun onResponse(call: Call<NotificationListResponse>, response: Response<NotificationListResponse>) {
 

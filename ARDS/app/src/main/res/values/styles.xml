@@ -24,4 +24,8 @@
             <item name="android:forceDarkAllowed" tools:ignore="NewApi">false</item>
         </style>
 
+    <style name="pickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/purple_500</item>
+    </style>
+
 </resources>

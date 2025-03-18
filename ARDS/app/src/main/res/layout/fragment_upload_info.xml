@@ -51,11 +51,18 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="16sp"/>
-                <EditText
+                <!--<EditText
                     android:id="@+id/station_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="New Delhi"
+                    android:background="@null"
+                    android:padding="2dp"
+                    android:textSize="14sp"/>-->
+                <Spinner
+                    android:id="@+id/spinner_station_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:padding="2dp"
                     android:textSize="14sp"/>
@@ -84,11 +91,10 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="16sp"/>
-                <EditText
+                <TextView
                     android:id="@+id/station_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="NDLS"
                     android:background="@null"
                     android:padding="2dp"
                     android:textSize="14sp"/>
@@ -151,11 +157,10 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="16sp"/>
-                <EditText
-                    android:id="@+id/scan_side"
+                <Spinner
+                    android:id="@+id/spn_scan_side"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Left"
                     android:background="@null"
                     android:padding="2dp"
                     android:textSize="14sp"/>

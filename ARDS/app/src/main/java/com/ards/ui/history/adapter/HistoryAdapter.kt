@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ards.R
@@ -13,7 +14,8 @@ import com.ards.utils.DateUtils
 
 class HistoryAdapter(
     private val context: Context,
-    private var trainList: List<NotificationListResponse.DataResponse.Faults>
+    private var trainList: List<NotificationListResponse.DataResponse.Faults>,
+    private val callback: Callback
 ) :
     RecyclerView.Adapter<HistoryAdapter.TrainViewHolder>() {
 
@@ -27,6 +29,7 @@ class HistoryAdapter(
        // val to: TextView = view.findViewById(R.id.tvTo)
        // val arrival: TextView = view.findViewById(R.id.tvArrival)
         val faults: TextView = view.findViewById(R.id.faultsCount)
+        val faultImage: ImageView = view.findViewById(R.id.arrowIconFault)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainViewHolder {
@@ -46,7 +49,14 @@ class HistoryAdapter(
       //  holder.to.text = train.to
       //  holder.arrival.text = train.arrival
         holder.faults.text = "Faults: "+"5"//"Faults: ${train.faults}"
+        holder.faultImage.setOnClickListener {
+            callback.onItemClicked(train.Id)
+        }
     }
 
     override fun getItemCount(): Int = trainList.size
+
+    interface Callback {
+        fun onItemClicked(notificationId: Int)
+    }
 }

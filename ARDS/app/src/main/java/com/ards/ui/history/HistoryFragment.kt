@@ -8,8 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ards.R
 import com.ards.databinding.FragmentHistoryBinding
 import com.ards.ui.history.adapter.HistoryAdapter
 import com.ards.ui.history.adapter.RecentAdapter
@@ -51,7 +53,16 @@ class HistoryFragment : Fragment() {
                 result.onSuccess { notifications ->
                     // Setting up RecyclerView
                     binding.rvTrainHistory.layoutManager = GridLayoutManager(requireContext(), 1)
-                    historyAdapter = HistoryAdapter(requireContext(), notifications.Data.faults)
+                    historyAdapter = HistoryAdapter(requireContext(), notifications.Data.faults, object : HistoryAdapter.Callback {
+                        override fun onItemClicked(
+                            notificationId: Int
+                        ) {
+                            val bundle = Bundle()
+                            bundle.putInt("category_id_key", notificationId)
+                            Navigation.findNavController(binding.rvTrainHistory)
+                                .navigate(R.id.libVideoFragment_to_processedFragment, bundle)
+                        }
+                    })
                     binding.rvTrainHistory.adapter = historyAdapter
                 }
 

@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import com.ards.R
 import com.ards.databinding.FragmentHomeBinding
 import com.ards.ui.history.adapter.RecentAdapter
 import com.ards.ui.home.graph.GraphCardAdapter
@@ -94,9 +96,18 @@ class HomeFragment : Fragment() {
                 result.onSuccess { notifications ->
                     // Setting up RecyclerView
                     binding.recentTrainsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
-                    recentAdapter = RecentAdapter(requireContext(), notifications.Data.faults)
+                    recentAdapter = RecentAdapter(requireContext(), notifications.Data.faults, object : RecentAdapter.Callback {
+                        override fun onItemClicked(
+                            notificationId: Int
+                        ) {
+                            val bundle = Bundle()
+                            bundle.putInt("notification_id_key", notificationId)
+                            Navigation.findNavController(binding.recentTrainsRecyclerView)
+                                .navigate(R.id.uploadFragment_to_predictFragment, bundle)
+                        }
+                    })
                     binding.recentTrainsRecyclerView.adapter = recentAdapter
-                }
+                    }
 
                 result.onFailure { error ->
                     Toast.makeText(requireContext(), "Error: ${error.message}", Toast.LENGTH_SHORT).show()

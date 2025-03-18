@@ -11,12 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="4dp">
+        android:padding="4dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <!-- Back Button & Title -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/btnBack"
                 android:layout_width="50dp"
@@ -28,15 +31,14 @@
                 android:id="@+id/tvProcessedTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Processed Output"
-                android:textSize="22sp"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:text="Processed Output"
                 android:textColor="@android:color/black"
-                app:layout_constraintStart_toEndOf="@id/btnBack"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="22sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/btnBack"
-                />
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </RelativeLayout>
 
@@ -52,27 +54,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="10dp"
             android:background="#80000000"
+            android:padding="10dp"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/upload_video_progress"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/purple_500"
+            android:elevation="10dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 
         <Button
             android:id="@+id/btnPredict"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/get_prediction"
-            android:background="@drawable/button_background"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="24dp"
+            android:background="@drawable/button_background"
             android:padding="5dp"
-            android:layout_gravity="center_horizontal"/>
-
+            android:text="@string/get_prediction" />
 
 
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

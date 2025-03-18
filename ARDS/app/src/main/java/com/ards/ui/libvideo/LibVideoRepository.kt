@@ -2,13 +2,11 @@ package com.ards.ui.libvideo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.ards.remote.apimodel.MasterDataRequest
-import com.ards.remote.apimodel.MasterDataResponse
 import com.ards.remote.apimodel.VideoByCategoryRequest
 import com.ards.remote.apimodel.VideoByCategoryResponse
 import com.ards.remote.remote.ApiFactory
 import com.ards.remote.remote.service.ArdsService
-import com.ards.utils.Constant
+import com.ards.utils.ArdsConstant
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +18,7 @@ class LibVideoRepository {
         val liveData = MutableLiveData<Result<VideoByCategoryResponse>>()
 
 
-        val call = apiService.getVideoByCategory(VideoByCategoryRequest(Constant.ARDS_APIKEY, catgoryId))
+        val call = apiService.getVideoByCategory(VideoByCategoryRequest(ArdsConstant.ARDS_APIKEY, catgoryId))
         call.enqueue(object : Callback<VideoByCategoryResponse> {
             override fun onResponse(call: Call<VideoByCategoryResponse>, response: Response<VideoByCategoryResponse>) {
 

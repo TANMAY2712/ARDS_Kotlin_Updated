@@ -8,7 +8,7 @@ import com.ards.remote.apimodel.VideoByCategoryRequest
 import com.ards.remote.apimodel.VideoByCategoryResponse
 import com.ards.remote.remote.ApiFactory
 import com.ards.remote.remote.service.ArdsService
-import com.ards.utils.Constant
+import com.ards.utils.ArdsConstant
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +20,7 @@ class LibraryRepository {
         val liveData = MutableLiveData<Result<MasterDataResponse>>()
 
 
-        val call = apiService.masterData(MasterDataRequest(Constant.ARDS_APIKEY, type, Id))
+        val call = apiService.masterData(MasterDataRequest(ArdsConstant.ARDS_APIKEY, type, Id))
         call.enqueue(object : Callback<MasterDataResponse> {
             override fun onResponse(call: Call<MasterDataResponse>, response: Response<MasterDataResponse>) {
 
@@ -42,7 +42,7 @@ class LibraryRepository {
         val liveData = MutableLiveData<Result<VideoByCategoryResponse>>()
 
 
-        val call = apiService.getVideoByCategory(VideoByCategoryRequest(Constant.ARDS_APIKEY, catgoryId))
+        val call = apiService.getVideoByCategory(VideoByCategoryRequest(ArdsConstant.ARDS_APIKEY, catgoryId))
         call.enqueue(object : Callback<VideoByCategoryResponse> {
             override fun onResponse(call: Call<VideoByCategoryResponse>, response: Response<VideoByCategoryResponse>) {
 

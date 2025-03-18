@@ -1,7 +1,7 @@
 package com.ards.remote.remote
 
 import android.content.Context
-import com.ards.utils.Constant
+import com.ards.utils.ArdsConstant
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,7 +18,7 @@ object ApiFactory {
     }
     private fun makeErosNowApiService(okHttpClient: OkHttpClient):
             Retrofit = Retrofit.Builder()
-        .baseUrl(Constant.BASE_URL)
+        .baseUrl(ArdsConstant.BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
@@ -46,7 +46,7 @@ object ApiFactory {
     object RetrofitClient {
         private val retrofit: Retrofit by lazy {
             Retrofit.Builder()
-                .baseUrl(Constant.BASE_URL) // Use the BASE_URL from Constants.kt
+                .baseUrl(ArdsConstant.BASE_URL) // Use the BASE_URL from Constants.kt
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
@@ -61,7 +61,7 @@ object ApiFactory {
     object RetrofitClients {
         private val retrofit: Retrofit by lazy {
             Retrofit.Builder()
-                .baseUrl(Constant.BASE_URLA) // Use the BASE_URL from Constants.kt
+                .baseUrl(ArdsConstant.PREDICTION_BASE_URL) // Use the BASE_URL from Constants.kt
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }

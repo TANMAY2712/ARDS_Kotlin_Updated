@@ -40,15 +40,15 @@ class GraphCardAdapter(
         val item = items[position]
         if (position==0){
             holder.title.text = "Defects per Station"
-            holder.number.text = "${item.FaultCount}+"
+            holder.number.text = "${"80"}+"
         }
         if (position==1){
             holder.title.text = "Repair Cost by Severity"
-            holder.number.text = "${item.FaultCount}+"
+            holder.number.text = "${"300"}+"
         }
         if (position==2){
             holder.title.text = "Defects Over Time"
-            holder.number.text = "${item.FaultCount}+"
+            holder.number.text = "${"20"}+"
         }
 
 

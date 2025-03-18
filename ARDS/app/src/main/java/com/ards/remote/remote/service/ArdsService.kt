@@ -8,26 +8,33 @@ import com.ards.remote.apimodel.VerifyOtpRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Url
 import com.ards.remote.apimodel.ChartRequest
 import com.ards.remote.apimodel.ChartResponse
 import com.ards.remote.apimodel.MasterDataRequest
 import com.ards.remote.apimodel.MasterDataResponse
+import com.ards.remote.apimodel.ModelInferenceResponse
 import com.ards.remote.apimodel.NotificationFaultListRequest
 import com.ards.remote.apimodel.NotificationFaultListResponse
 import com.ards.remote.apimodel.NotificationListRequest
 import com.ards.remote.apimodel.NotificationListResponse
+import com.ards.remote.apimodel.PreSignedUrlResponse
 import com.ards.remote.apimodel.SignInRequest
 import com.ards.remote.apimodel.SignInResponse
 import com.ards.remote.apimodel.VideoByCategoryRequest
 import com.ards.remote.apimodel.VideoByCategoryResponse
-import com.ards.utils.Constant
+import com.ards.utils.ArdsConstant
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import retrofit2.http.HeaderMap
+import retrofit2.http.PUT
+import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface ArdsService {
-    @POST(Constant.ApiEndPoint.GenrateOTP)
+    @POST(ArdsConstant.ApiEndPoint.GenrateOTP)
     fun sendOtp(@Body request: GenrateOTPRequest): Call<GenrateOTPResponse>
 
-    @POST(Constant.ApiEndPoint.VerifyOTP)
+    @POST(ArdsConstant.ApiEndPoint.VerifyOTP)
     fun verifyOTP(@Body request: VerifyOtpRequest): Call<VerifyOtpResponse>
 
     @GET("videos") // Replace with actual endpoint
@@ -36,25 +43,46 @@ interface ArdsService {
     fun getPlayground(): Call<List<FaultResponse>>*/
    /* @GET
     fun getPlayground(@Url fullUrl: String): Call<List<FaultResponse>>*/
-    @POST(Constant.ApiEndPoint.NotificationFault)
+    @POST(ArdsConstant.ApiEndPoint.NotificationFault)
     fun getNotificationFaultList(@Body request: NotificationFaultListRequest): Call<NotificationFaultListResponse>
 
-    @POST(Constant.ApiEndPoint.NotificationList)
+    @POST(ArdsConstant.ApiEndPoint.NotificationList)
     fun getAllNotification(@Body request: NotificationListRequest): Call<NotificationListResponse>
 
-    @POST(Constant.ApiEndPoint.SignIn)
+    @POST(ArdsConstant.ApiEndPoint.SignIn)
     fun signIn(@Body request: SignInRequest): Call<SignInResponse>
 
-    @POST(Constant.ApiEndPoint.ChartByFaultType)
+    @POST(ArdsConstant.ApiEndPoint.ChartByFaultType)
     fun chartByFaultType(@Body request: ChartRequest): Call<ChartResponse>
 
-    @POST(Constant.ApiEndPoint.MasterData)
+    @POST(ArdsConstant.ApiEndPoint.MasterData)
     fun masterData(@Body request: MasterDataRequest): Call<MasterDataResponse>
 
-    @POST(Constant.ApiEndPoint.UserProfile)
+    @POST(ArdsConstant.ApiEndPoint.UserProfile)
     fun updateUserProfile(@Body request: MasterDataRequest): Call<MasterDataResponse>
 
-    @POST(Constant.ApiEndPoint.VideoByCategory)
+    @POST(ArdsConstant.ApiEndPoint.VideoByCategory)
     fun getVideoByCategory(@Body request: VideoByCategoryRequest): Call<VideoByCategoryResponse>
+
+    // GET Pre-Signed URL
+    @GET(ArdsConstant.ApiEndPoint.GetPresignedUrl)
+    fun getPreSignedUrl(): Call<PreSignedUrlResponse>
+
+    // Upload File to S3 (Presigned URL)
+    @PUT
+    fun uploadFileToS3(
+        @Url url: String,
+        @Body file: RequestBody,
+        @HeaderMap headers: Map<String, String>
+    ): Call<ResponseBody>
+
+    // Perform Model Inference
+    @GET(ArdsConstant.ApiEndPoint.ModelInference)
+    fun performModelInference(
+        @Query("train_no") trainNo: String,
+        @Query("station") station: String,
+        @Query("rec_side") recSide: String,
+        @Query("s3_path") s3Path: String
+    ): Call<ModelInferenceResponse>
 
 }
