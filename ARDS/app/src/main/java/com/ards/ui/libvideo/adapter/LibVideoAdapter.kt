@@ -41,13 +41,13 @@ class LibVideoAdapter(
 
         holder.btnView.setOnClickListener {
             // Handle button click (e.g., open video list)
-            callback.onItemClicked(component.VideoUrl)
+            callback.onItemClickedVideo(component.VideoUrl)
         }
     }
 
     override fun getItemCount(): Int = componentList.size
 
     interface Callback {
-        fun onItemClicked(videoUrl: String)
+        fun onItemClickedVideo(videoUrl: String)
     }
 }

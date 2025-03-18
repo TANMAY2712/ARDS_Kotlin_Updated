@@ -73,7 +73,7 @@ class LibVideoFragment : Fragment() {
                 result.onSuccess { videos ->
                     // Setting up RecyclerView
                     binding.rvTrainLibrary.layoutManager = GridLayoutManager(requireContext(), 1)
-                    libraryAdapter = LibVideoAdapter(requireContext(), videos.Data, object : LibVideoAdapter.Callback {
+                    /*libraryAdapter = LibVideoAdapter(requireContext(), videos.Data, object : LibVideoAdapter.Callback {
                         override fun onItemClicked(
                             videoUrl: String
                         ) {
@@ -82,7 +82,7 @@ class LibVideoFragment : Fragment() {
                             Navigation.findNavController(binding.rvTrainLibrary)
                                 .navigate(R.id.libVideoFragment_to_processedFragment, bundle)
                         }
-                    })
+                    })*/
                     binding.rvTrainLibrary.adapter = libraryAdapter
                 }
 

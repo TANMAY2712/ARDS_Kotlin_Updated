@@ -41,7 +41,7 @@ class ProfileFragment : Fragment() {
            // MenuItem("Appearance", R.drawable.bell),
            // MenuItem("Security", R.drawable.bell),
             MenuItem("Help & Support", R.drawable.help),
-            MenuItem("Language", R.drawable.language),
+           // MenuItem("Language", R.drawable.language),
             MenuItem("Contact Us", R.drawable.user),
             MenuItem("Manage Users", R.drawable.bell)
         )

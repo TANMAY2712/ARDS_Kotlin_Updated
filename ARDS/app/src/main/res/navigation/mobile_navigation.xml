@@ -132,5 +132,10 @@
         android:name="com.ards.ui.upload.UploadFrament"
         android:label="@string/title_upload"
         tools:layout="@layout/fragment_upload" />
+    <fragment
+        android:id="@+id/navigation_graph"
+        android:name="com.ards.ui.dashboard.GraphFragment"
+        android:label="@string/title_graph"
+        tools:layout="@layout/fragment_graph" />
 
 </navigation>

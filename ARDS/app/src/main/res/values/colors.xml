@@ -13,4 +13,5 @@
     <color name="red">#F44336</color>   <!-- Red for wrong -->
     <color name="gray">#BDBDBD</color>
     <color name="lihjt_grey">#DAD0D0</color>
+    <color name="selected_background">#DAD0D0</color> <!-- Light Orange -->
 </resources>

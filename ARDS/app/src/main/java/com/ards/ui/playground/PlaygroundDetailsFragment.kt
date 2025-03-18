@@ -38,6 +38,9 @@ class PlaygroundDetailsFragment : Fragment() {
         player = ExoPlayer.Builder(requireContext()).build()
         binding.playerView.player = player
 
+        binding.btnBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
         return binding.root
     }
 
@@ -46,7 +49,7 @@ class PlaygroundDetailsFragment : Fragment() {
 
         val videoUrl =
             arguments?.getString("video_url")!!
-        binding.trainName.text = arguments?.getString("title")!!
+        binding.trainName.text = arguments?.getString("train_name")!!
         if (videoUrl.isNotEmpty()) {
             val mediaItem = MediaItem.fromUri(Uri.parse(videoUrl))
             player?.apply {

@@ -19,12 +19,26 @@ class PlaygroundAdapter(
 
     class PlaygroundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle: TextView = itemView.findViewById(R.id.trainName)
+        val trainNo: TextView = itemView.findViewById(R.id.trainNo)
+        val trainDate: TextView = itemView.findViewById(R.id.trainDate)
+        val trainStation: TextView = itemView.findViewById(R.id.trainStation)
+        val recordingSide: TextView = itemView.findViewById(R.id.recordingSide)
         val thumbnil: ImageView = itemView.findViewById(R.id.playerView)
 
         fun bind(playground: Playground, onItemClick: (Playground) -> Unit) {
-            tvTitle.text = playground.title
+            tvTitle.text = playground.train_name
+            trainNo.text = playground.train_number
+
+            trainDate.text = "Date: "+playground.date
+            trainStation.text = "Station: "+playground.station
+            recordingSide.text = "Recording Side: "+playground.side
+
             itemView.setOnClickListener { onItemClick(playground) }
-            loadVideoThumbnail(playground.object_url, thumbnil)
+            Glide.with(thumbnil.context)
+                .load(playground.thumbnail_url)
+                .apply(RequestOptions().fitCenter()) // Ensures the image fits while maintaining aspect ratio
+                .into(thumbnil)
+           // loadVideoThumbnail(playground.thumbnail_url, thumbnil)
 
         }
         private fun loadVideoThumbnail(videoUrl: String, imageView: ImageView) {

@@ -9,6 +9,7 @@
     app:cardBackgroundColor="@android:color/white">
 
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -20,8 +21,9 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Faults this Month"
+            android:text=""
             android:textSize="10sp"
+            android:gravity="center"
             android:textColor="#555"
             android:textStyle="bold"/>
 

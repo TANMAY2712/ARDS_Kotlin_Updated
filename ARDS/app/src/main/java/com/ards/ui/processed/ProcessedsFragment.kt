@@ -45,16 +45,50 @@ class ProcessedsFragment : Fragment() {
 
         // Set up RecyclerView
         binding.rvFaultList.layoutManager = LinearLayoutManager(requireContext())
-        faultAdapter = FaultAdapter(faultList) { timestamp -> seekToTimestamp(timestamp) }
+
+        faultAdapter = FaultAdapter(
+            faultList,
+            onTimestampClick = { timestamp, position ->
+                seekToTimestamp(timestamp) // Function to seek video to timestamp
+                faultImageAdapter.highlightImage(position) // Highlight image
+
+
+                // Scroll RecyclerView to the selected fault
+                binding.rvFaultFrames.smoothScrollToPosition(position)
+            },
+        )
+
         binding.rvFaultList.adapter = faultAdapter
 
+        binding.rvFaultFrames.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-        binding.rvFaultFrames.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        faultImageAdapter = FaultImageAdapter(faultList) { timestamp -> seekToTimestamp(timestamp) }
+        faultImageAdapter = FaultImageAdapter(
+            faultList,
+            onImageClick = { position ->
+                // Highlight selected fault item in the list
+                val previousSelected = faultAdapter.selectedPosition
+                faultAdapter.selectedPosition = position
+                faultAdapter.notifyItemChanged(previousSelected) // Unselect previous
+                faultAdapter.notifyItemChanged(position) // Highlight new selection
+
+                // Scroll fault list to corresponding item
+                binding.rvFaultList.smoothScrollToPosition(position)
+            },
+            onTimestampClick = { timestamp ->
+                seekToTimestamp(timestamp) // Seek video to timestamp when image clicked
+            }
+        )
+
         binding.rvFaultFrames.adapter = faultImageAdapter
 
 
+
+
         fetchFaultData()
+        binding.btnBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
         return view
     }
 

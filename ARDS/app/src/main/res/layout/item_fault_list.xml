@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:gravity="center"
     android:layout_height="wrap_content"
+    android:gravity="center"
+    android:id="@+id/linear"
     android:orientation="horizontal"
     android:padding="10dp">
 
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Brakes"
-        android:textSize="16sp"
+        android:textSize="13sp"
         android:textColor="@color/black"/>
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:text="1:32"
         android:gravity="center"
-        android:textSize="16sp"
+        android:textSize="13sp"
         android:padding="5dp"/>
 
     <LinearLayout
@@ -34,11 +34,10 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-        <!-- Correct Button -->
         <ImageView
             android:id="@+id/btnCorrect"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:tint="@color/gray"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Correct"
@@ -47,26 +46,36 @@
 
         <ImageView
             android:id="@+id/btnWrong"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:tint="@color/gray"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Wrong"
             tools:ignore="UseAppTint" />
 
-
     </LinearLayout>
 
+    <!-- Pencil Edit Button -->
     <ImageView
+        android:id="@+id/btnEdit"
         android:layout_width="0dp"
         android:layout_weight="0.5"
         android:layout_height="wrap_content"
-        android:src="@drawable/comment"
-        android:gravity="center"
+        android:src="@drawable/pencil"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Correct"
-        android:layout_marginEnd="5dp"
+        android:contentDescription="Edit"
         tools:ignore="UseAppTint" />
 
+    <!-- View Button (Initially Hidden) -->
 
+    <ImageView
+        android:id="@+id/btnView"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:src="@drawable/eye"
+        android:visibility="gone"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Edit"
+        tools:ignore="UseAppTint" />
 </LinearLayout>

@@ -19,8 +19,9 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/btnBack"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:background="@drawable/back"
+                android:layout_height="wrap_content"
                 tools:ignore="MissingConstraints" />
 
             <!-- Title -->
@@ -29,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Processed Output"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
@@ -71,7 +72,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFaultFrames"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -115,7 +116,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textStyle="bold"
+                            android:textSize="13sp"
                             android:text="Fault Part"
                             android:textColor="@color/black"/>
 
@@ -126,7 +127,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Time-Stamp"
-                            android:textStyle="bold"
+                            android:textSize="13sp"
                             android:textColor="@color/black"
                             android:gravity="center"
                             android:padding="5dp"/>
@@ -137,7 +138,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:text="Review"
-                            android:textStyle="bold"
+                            android:textSize="13sp"
                             android:textColor="@color/black"
                             android:gravity="center"
                             android:layout_height="30dp"
@@ -149,8 +150,8 @@
                             android:id="@+id/btnEditFault"
                             android:layout_width="0dp"
                             android:layout_weight="0.5"
-                            android:text="Edit"
-                            android:textStyle="bold"
+                            android:text="Cmts."
+                            android:textSize="13sp"
                             android:textColor="@color/black"
                             android:gravity="center"
                             android:layout_height="30dp"

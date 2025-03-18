@@ -33,6 +33,9 @@ class PlaygroundFragment : Fragment() {
         setupRecyclerView()
         observeViewModel()
 
+        binding.btnBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
         return binding.root
     }
 
@@ -42,7 +45,7 @@ class PlaygroundFragment : Fragment() {
             val bundle = Bundle().apply {
                 putString("video_url", video.object_url)
                 putString("url", video.fault_request)
-                putString("title", video.title)
+                putString("train_name", video.train_name)
             }
             Navigation.findNavController(binding.rvTrainPlayground)
                 .navigate(R.id.playgroundDetailsFragment,bundle)

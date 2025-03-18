@@ -7,83 +7,149 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ards.R
 import com.ards.databinding.FragmentLibraryBinding
 import com.ards.ui.library.adapter.LibraryAdapter
+import com.ards.ui.libvideo.adapter.LibVideoAdapter
+import android.app.AlertDialog
+import android.content.Context
+import android.net.Uri
+import android.widget.Button
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.ui.PlayerView
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 class LibraryFragment : Fragment() {
 
     private var _binding: FragmentLibraryBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
     private val libraryViewModel: LibraryViewModel by viewModels()
     private lateinit var libraryAdapter: LibraryAdapter
+    private lateinit var libraryDetailsAdapter: LibVideoAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(LibraryViewModel::class.java)
-
         _binding = FragmentLibraryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        libraryViewModel.isLoading.observe(requireActivity()) { isLoading ->
+        // Setup RecyclerView
+        setupRecyclerView()
+
+        // Observe Loading State
+        libraryViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.libraryProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
-        getLibrary("LibraryCategory",0)
 
-        /*binding.rvTrainLibrary.layoutManager = GridLayoutManager(requireContext(), 1)
+        // Fetch Library Data
+        getLibrary("LibraryCategory", 0)
 
-        val videoList = listOf(
-            Library("Springs (Suspension Springs)", "Cracks, deformation, corrosion...", R.drawable.train_spring, 2),
-            Library("Axle Box", "Overheating, cracks, oil leakage...", R.drawable.train_spring, 4),
-            Library("WSP Cable (Wheel Slide Protection)", "Damage, disconnection, corrosion...", R.drawable.train_spring, 3),
-            Library("Wheelsets", "Cracks, flat spots, wear...", R.drawable.train_spring, 2),
-            Library("Bogies", "Structural cracks, loose fasteners...", R.drawable.train_spring, 4),
-            Library("Brake Discs & Pads", "Wear, cracks, misalignment...", R.drawable.train_spring, 5)
-        )
-
-        libraryAdapter = LibraryAdapter(videoList)
-        binding.rvTrainLibrary.adapter = libraryAdapter*/
         return root
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvTrainLibrary.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        libraryAdapter = LibraryAdapter(requireContext(), mutableListOf(), object : LibraryAdapter.Callback {
+            override fun onItemClicked(catId: Int) {
+                getVideoBycategory(catId.toString())
+               /* val bundle = Bundle().apply {
+                    putString("category_id_key", catId.toString())
+                }
+                Navigation.findNavController(binding.rvTrainLibrary)
+                    .navigate(R.id.action_libraryFragment_to_videoFragment, bundle)*/
+            }
+        })
+        binding.rvTrainLibrary.adapter = libraryAdapter
+    }
+
+    private fun getLibrary(type: String, Id: Int) {
+        libraryViewModel.getLibrary(type, Id).observe(viewLifecycleOwner) { result ->
+            result.onSuccess { response ->
+                response.Data?.let {
+                    libraryAdapter.updateData(it) // Update the RecyclerView with new data
+                }
+            }
+            result.onFailure { error ->
+                Toast.makeText(requireContext(), "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-    private fun getLibrary(type: String, Id: Int) {
-        libraryViewModel.getLibrary(type, Id)
+
+    private fun getVideoBycategory(catgoryId: String) {
+        libraryViewModel.getVideoBycategory(catgoryId)
             .observe(viewLifecycleOwner) { result ->
 
-                result.onSuccess { notifications ->
+                result.onSuccess { videos ->
                     // Setting up RecyclerView
-                    binding.rvTrainLibrary.layoutManager = GridLayoutManager(requireContext(), 1)
-                    libraryAdapter = LibraryAdapter(requireContext(), notifications.Data, object : LibraryAdapter.Callback {
-                        override fun onItemClicked(
-                            catId: Int
+                    binding.rvTrainLibraryHorizontal.layoutManager = GridLayoutManager(requireContext(), 1)
+                    libraryDetailsAdapter = LibVideoAdapter(requireContext(), videos.Data, object : LibVideoAdapter.Callback {
+                        override fun onItemClickedVideo(
+                            videoUrl: String
                         ) {
-                            val bundle = Bundle()
-                            bundle.putString("category_id_key", catId.toString())
-                            Navigation.findNavController(binding.rvTrainLibrary)
-                                .navigate(R.id.action_libraryFragment_to_videoFragment, bundle)
+                            val url = videoUrl
+                            val videoId = getYoutubeVideoId(url)
+                            showVideoDialog(requireContext(),videoId)
+                            /*val bundle = Bundle()
+                            bundle.putString("category_id_key", videoUrl)
+                            Navigation.findNavController(binding.rvTrainLibraryHorizontal)
+                                .navigate(R.id.libVideoFragment_to_processedFragment, bundle)*/
                         }
                     })
-
-                    binding.rvTrainLibrary.adapter = libraryAdapter
+                    binding.rvTrainLibraryHorizontal.adapter = libraryDetailsAdapter
                 }
 
                 result.onFailure { error ->
                     Toast.makeText(requireContext(), "Error: ${error.message}", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+    fun getYoutubeVideoId(url: String): String {
+        return url.substringAfter("youtu.be/").substringBefore("?")
+    }
+
+
+    fun showVideoDialog(context: Context, videoUrl: String) {
+        // Inflate custom layout
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_video_player, null)
+
+        // Initialize YouTube Player View
+        val youTubePlayerView = dialogView.findViewById<YouTubePlayerView>(R.id.youtubePlayerView)
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
+
+        // Initialize YouTube Player
+        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.loadVideo(videoUrl, 0f) // Play video from start
+            }
+        })
+
+        // Create AlertDialog
+        val dialog = AlertDialog.Builder(context)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        // Handle Cancel Button Click
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // Show Dialog
+        dialog.show()
     }
 
 }
