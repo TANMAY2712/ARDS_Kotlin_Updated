@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley
 import com.ards.MainActivity
 import com.ards.R
 import com.ards.databinding.FragmentUploadBinding
+import com.ards.sharedpreference.PreferenceHelper
 import com.ards.utils.ArdsConstant
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.ExoPlayer
@@ -32,6 +33,10 @@ class UploadFragment : Fragment() {
     private var _binding: FragmentUploadBinding? = null
     private val binding get() = _binding!!
     private lateinit var videoUri: String
+    private lateinit var stationName: String
+    private lateinit var sidePosition: String
+    private lateinit var trainName: String
+    private lateinit var trainNumber: String
     private val uploadViewModel: UploadViewModel by viewModels()
     private var player: ExoPlayer? = null
 
@@ -45,6 +50,10 @@ class UploadFragment : Fragment() {
         }
 
         videoUri = arguments?.getString("videoUri_key") ?: ""
+        stationName = arguments?.getString("station_name_key") ?: ""
+        sidePosition = arguments?.getString("rake_side_key") ?: ""
+        trainName = arguments?.getString("train_name_key") ?: ""
+        trainNumber = arguments?.getString("train_number_key") ?: ""
 
         // Ensure videoUri is not empty
         if (videoUri.isNotEmpty()) {
@@ -72,7 +81,7 @@ class UploadFragment : Fragment() {
     }
 
     private fun showLoadingAnimation() {
-        binding.gifLoaderContainer.visibility = View.VISIBLE
+        binding.gifLoaderContainerUpload.visibility = View.VISIBLE
         Glide.with(this).asGif().load(R.drawable.train_loader).into(binding.gifLoader)
     }
 
@@ -82,7 +91,7 @@ class UploadFragment : Fragment() {
         repository.uploadFileToBlob(
             fileUri, trainNo, station, recSide, ctx,
             { response ->
-                binding.gifLoaderContainer.visibility = View.GONE
+                binding.gifLoaderContainerUpload.visibility = View.GONE
                 Log.d("UploadSuccess", "Response: $response")
 
                 try {
@@ -98,7 +107,7 @@ class UploadFragment : Fragment() {
 
             },
             {
-                binding.gifLoaderContainer.visibility = View.GONE
+                binding.gifLoaderContainerUpload.visibility = View.GONE
                 Log.e("UploadError", "File upload failed")
                 Toast.makeText(requireContext(), "Upload Failed", Toast.LENGTH_SHORT).show()
             }
@@ -138,13 +147,13 @@ class UploadFragment : Fragment() {
 
         val requestBody = JSONObject().apply {
             put("APIKey", ArdsConstant.ARDS_APIKEY)
-            put("UserId", 91273)
-            put("title", "Train Fault Report")
+            put("UserId", PreferenceHelper.getInstance(requireContext()).getUserId)
+            put("title", trainName+"("+trainNumber+") Fault Report")
             put("body", "Detailed report of detected faults in train components.")
-            put("station_name", "New Delhi")
-            put("train_number", "14779")
-            put("train_name", "Shatabdi Express")
-            put("coach_side", "Left")
+            put("station_name", stationName)
+            put("train_number", trainNumber)
+            put("train_name", trainName)
+            put("coach_side", sidePosition)
             put("output_url", outputUrl)
             put("faults", faultsArray)
         }

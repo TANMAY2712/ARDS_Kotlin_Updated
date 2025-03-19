@@ -36,6 +36,8 @@ class UploadInfoFragment : Fragment() {
     private var videoUri: Uri? = null
     private var stationName: String = ""
     private var sidePosition: String = ""
+    private var trainNumber: String = ""
+    private var trainName: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,12 +111,19 @@ class UploadInfoFragment : Fragment() {
         }
 
         binding.continueButton.setOnClickListener {
-            if (binding.trainNumber.text.isNotEmpty() && sidePosition.isNotEmpty()
+            trainName=binding.trainName.text.toString()
+            trainNumber=binding.trainNumber.text.toString()
+            if (trainName.isNotEmpty() && trainNumber.isNotEmpty() && sidePosition.isNotEmpty()
                 && binding.stationCode.text.isNotEmpty() && stationName.isNotEmpty()
             ) {
                 if (type.equals("cameraxapi")) {
+                    val bundle = Bundle()
+                    bundle.putString("station_name_key", stationName)
+                    bundle.putString("rake_side_key", sidePosition)
+                    bundle.putString("train_name_key", trainName)
+                    bundle.putString("train_number_key", trainNumber)
                     Navigation.findNavController(binding.continueButton)
-                        .navigate(R.id.action_trainInfoFragment_to_captureFragment)
+                        .navigate(R.id.action_trainInfoFragment_to_captureFragment, bundle)
                 } else if (type.equals("gallery")) {
                     if (checkStoragePermission()) {
                         openGalleryToPickVideo()
@@ -189,6 +198,10 @@ class UploadInfoFragment : Fragment() {
             val file = getFileFromUri(requireContext(), videoUri!!)
             val bundle = Bundle()
             bundle.putString("videoUri_key", videoUri.toString())
+            bundle.putString("station_name_key", stationName)
+            bundle.putString("rake_side_key", sidePosition)
+            bundle.putString("train_name_key", trainName)
+            bundle.putString("train_number_key", trainNumber)
             Navigation.findNavController(binding.continueButton)
                 .navigate(R.id.action_trainInfoFragment_to_uploadFragment, bundle)
         }

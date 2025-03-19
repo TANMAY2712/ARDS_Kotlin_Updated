@@ -137,7 +137,11 @@
         android:id="@+id/navigation_capture"
         android:name="com.ards.ui.capture.CaptureFragment"
         android:label="@string/title_capture"
-        tools:layout="@layout/fragment_capture" />
+        tools:layout="@layout/fragment_capture">
+        <action
+            android:id="@+id/action_captureFragment_to_uploadFragment"
+            app:destination="@id/navigation_upload"/>
+        </fragment>
 
     <fragment
         android:id="@+id/navigation_info"

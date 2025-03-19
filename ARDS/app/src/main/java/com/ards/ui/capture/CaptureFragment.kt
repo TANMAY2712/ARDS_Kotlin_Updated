@@ -2,6 +2,7 @@ package com.ards.ui.capture
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,6 +22,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import com.ards.R
 import com.ards.databinding.FragmentCaptureBinding
 import com.ards.ui.scan.ScanViewModel
 import java.io.File
@@ -36,9 +39,13 @@ class CaptureFragment : Fragment() {
     private var recording: Recording? = null
     private var selectedQuality: Quality = Quality.FHD
     private lateinit var cameraExecutor: ExecutorService
-
+    private lateinit var stationName: String
+    private lateinit var sidePosition: String
+    private lateinit var trainName: String
+    private lateinit var trainNumber: String
     private var isRecording = false
     private var isPaused = false
+    private var videoFile: File? = null // Store the video file
     private var recordingTime = 0 // Time in seconds
     private val handler = Handler(Looper.getMainLooper())
 
@@ -53,6 +60,11 @@ class CaptureFragment : Fragment() {
 
         _binding = FragmentCaptureBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        stationName = arguments?.getString("station_name_key") ?: ""
+        sidePosition = arguments?.getString("rake_side_key") ?: ""
+        trainName = arguments?.getString("train_name_key") ?: ""
+        trainNumber = arguments?.getString("train_number_key") ?: ""
 
         if (allPermissionsGranted()) {
             startCamera()
@@ -169,8 +181,8 @@ class CaptureFragment : Fragment() {
     }
 
     private fun startRecording() {
-        val file = File(requireContext().externalMediaDirs.firstOrNull(), "ards_${System.currentTimeMillis()}.mp4")
-        val outputOptions = FileOutputOptions.Builder(file).build()
+        videoFile = File(requireContext().externalMediaDirs.firstOrNull(), "ards_${System.currentTimeMillis()}.mp4")
+        val outputOptions = FileOutputOptions.Builder(videoFile!!).build()
 
         val recorder = videoCapture?.output ?: return
         val pendingRecording = recorder.prepareRecording(requireActivity(), outputOptions)
@@ -178,7 +190,16 @@ class CaptureFragment : Fragment() {
         recording = pendingRecording.start(ContextCompat.getMainExecutor(requireActivity())) { event ->
             if (event is VideoRecordEvent.Finalize) {
                 if (!event.hasError()) {
-                    Toast.makeText(requireActivity(), "Video saved: ${file.absolutePath}", Toast.LENGTH_LONG).show()
+                    val videoUri = Uri.fromFile(videoFile) // Get the URI of the saved file
+                    Toast.makeText(requireActivity(), "Video saved: ${videoUri}", Toast.LENGTH_LONG).show()
+                    val bundle = Bundle()
+                    bundle.putString("station_name_key", stationName)
+                    bundle.putString("rake_side_key", sidePosition)
+                    bundle.putString("train_name_key", trainName)
+                    bundle.putString("train_number_key", trainNumber)
+                    bundle.putString("videoUri_key", videoUri.toString()) // Pass URI as string
+                    Navigation.findNavController(binding.btnStop)
+                        .navigate(R.id.action_captureFragment_to_uploadFragment, bundle)
                 } else {
                     Log.e("CameraX", "Error: ${event.error}")
                 }
@@ -211,7 +232,15 @@ class CaptureFragment : Fragment() {
     private fun stopRecording() {
         recording?.stop()
         recording = null
-        resetUI()
+        videoFile?.let {
+            val videoUri = Uri.fromFile(it)
+            val bundle = Bundle()
+            bundle.putString("videoUri_key", videoUri.toString()) // Pass URI as string
+
+            /*Navigation.findNavController(binding.btnStop)
+                .navigate(R.id.action_captureFragment_to_uploadFragment, bundle)*/
+        }
+        //resetUI()
     }
 
     private fun updateUI() {
