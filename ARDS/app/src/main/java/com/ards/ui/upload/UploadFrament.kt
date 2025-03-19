@@ -91,7 +91,6 @@ class UploadFragment : Fragment() {
         repository.uploadFileToBlob(
             fileUri, trainNo, station, recSide, ctx,
             { response ->
-                binding.gifLoaderContainerUpload.visibility = View.GONE
                 Log.d("UploadSuccess", "Response: $response")
 
                 try {
@@ -107,9 +106,9 @@ class UploadFragment : Fragment() {
 
             },
             {
-                binding.gifLoaderContainerUpload.visibility = View.GONE
+              //  binding.gifLoaderContainerUpload.visibility = View.GONE
                 Log.e("UploadError", "File upload failed")
-                Toast.makeText(requireContext(), "Upload Failed", Toast.LENGTH_SHORT).show()
+               // Toast.makeText(requireContext(), "Upload Failed", Toast.LENGTH_SHORT).show()
             }
         )
     }
@@ -163,6 +162,7 @@ class UploadFragment : Fragment() {
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.POST, url, requestBody,
             { response ->
+                binding.gifLoaderContainerUpload.visibility = View.GONE
                 Log.d("VolleyResponse", "Response: $response")
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -174,6 +174,7 @@ class UploadFragment : Fragment() {
                     .navigate(R.id.uploadFragment_to_predictFragment, bundle)*/
             },
             { error ->
+                binding.gifLoaderContainerUpload.visibility = View.GONE
                 Log.e("VolleyError", "Error: ${error.message}")
                 Toast.makeText(context, "Error sending fault report", Toast.LENGTH_SHORT).show()
             }
