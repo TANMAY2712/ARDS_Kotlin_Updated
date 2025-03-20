@@ -96,20 +96,28 @@ class LibraryFragment : Fragment() {
                 result.onSuccess { videos ->
                     // Setting up RecyclerView
                     binding.rvTrainLibraryHorizontal.layoutManager = GridLayoutManager(requireContext(), 1)
+
                     libraryDetailsAdapter = LibVideoAdapter(requireContext(), videos.Data, object : LibVideoAdapter.Callback {
-                        override fun onItemClickedVideo(
-                            videoUrl: String
-                        ) {
-                            val url = videoUrl
-                            val videoId = getYoutubeVideoId(url)
-                            showVideoDialog(requireContext(),videoId)
-                            /*val bundle = Bundle()
-                            bundle.putString("category_id_key", videoUrl)
-                            Navigation.findNavController(binding.rvTrainLibraryHorizontal)
-                                .navigate(R.id.libVideoFragment_to_processedFragment, bundle)*/
+
+                        override fun onItemClickedVideo(videoUrl: String) {
+                            val videoId = getYoutubeVideoId(videoUrl)
+                            showVideoDialog(requireContext(), videoId)
                         }
+
+                        override fun onLikeClicked(videoUrl: String, position: Int) {
+                          //  Toast.makeText(requireContext(), "Liked: $videoUrl", Toast.LENGTH_SHORT).show()
+                            // TODO: Implement like functionality (e.g., update database, UI, etc.)
+                        }
+
+                        override fun onCommentSubmitted(videoUrl: String, comment: String) {
+
+                        }
+
+
                     })
+
                     binding.rvTrainLibraryHorizontal.adapter = libraryDetailsAdapter
+
                 }
 
                 result.onFailure { error ->

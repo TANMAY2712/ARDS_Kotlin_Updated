@@ -20,15 +20,19 @@ import com.ards.remote.apimodel.NotificationListResponse
 import com.ards.remote.apimodel.PreSignedUrlResponse
 import com.ards.remote.apimodel.SignInRequest
 import com.ards.remote.apimodel.SignInResponse
+import com.ards.remote.apimodel.UploadFileResponse
 import com.ards.remote.apimodel.UserProfileRequest
 import com.ards.remote.apimodel.UserProfileResponse
 import com.ards.remote.apimodel.VideoByCategoryRequest
 import com.ards.remote.apimodel.VideoByCategoryResponse
 import com.ards.utils.ArdsConstant
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.http.HeaderMap
+import retrofit2.http.Multipart
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Query
 import retrofit2.http.Url
 
@@ -87,6 +91,12 @@ interface ArdsService {
         @Query("s3_path") s3Path: String
     ): Call<ModelInferenceResponse>
 
+    @Multipart
+    @POST(ArdsConstant.ApiEndPoint.UploadFile)
+    fun uploadfile(
+        @Part UserImage: MultipartBody.Part,
+        @Part(ArdsConstant.ApiEndPoint.APIKey) Id: RequestBody
 
+    ): Call<UploadFileResponse>
 
 }

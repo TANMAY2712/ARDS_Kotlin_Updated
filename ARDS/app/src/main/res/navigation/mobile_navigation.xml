@@ -13,7 +13,10 @@
         <action
             android:id="@+id/uploadFragment_to_predictFragment"
             app:destination="@id/navigation_predictFragment" />
-        </fragment>
+        <action
+            android:id="@+id/action_homeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_predictFragment"

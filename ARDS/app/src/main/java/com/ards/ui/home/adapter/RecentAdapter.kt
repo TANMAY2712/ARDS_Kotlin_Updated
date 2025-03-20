@@ -39,7 +39,7 @@ class RecentAdapter(
         holder.trainNo.text = train.train_number
         holder.trainRoute.text = train.station_name//train.from+" -> "+train.to
         holder.trainTime.text = DateUtils.getAppDateFromApiDate(train.createdDate)//train.departure+" -> "+ train.arrival
-        holder.faults.text = "Faults: 3"
+        holder.faults.text = "Faults: "+train.TotalFaults
         holder.faultImage.setOnClickListener {
             callback.onItemClicked(train.Id)
         }

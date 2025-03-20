@@ -54,65 +54,82 @@ class UploadInfoFragment : Fragment() {
             type = requireArguments().getString("scan_type")!!
         }
 
-        val sideList = listOf("Select Side", "Left", "Right")
+        val sideList = listOf("Select Side", "Platform Side", "Non Platform Side")
 
-        val adapterSide = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, sideList)
+        val adapterSide =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, sideList)
         binding.spnScanSide.adapter = adapterSide
         binding.spnScanSide.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val side = sideList[position]
                 if (position != 0) {
-                    sidePosition =  side
+                    sidePosition = side
                 }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // Do nothing
             }
         }
 
+        trainNumber()
 
-        val cityList = listOf("Select Station", "New Delhi", "Mumbai Central", "Howrah Junction", "Chennai Central", "Varanasi Junction", "Bangalore City", "Lucknow Charbagh")
+        val cityList = listOf(
+            "Select Station",
+            "New Delhi",
+            "Mumbai Central",
+            "Howrah Junction",
+            "Chennai Central",
+            "Varanasi Junction",
+            "Bangalore City",
+            "Lucknow Charbagh"
+        )
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, cityList)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, cityList)
         binding.spinnerStationName.adapter = adapter
-        binding.spinnerStationName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedCity = cityList[position]
-                if (position != 0) { // Avoid selecting "Select City" as a choice
-                    //tvSelectedCity.text =
-                    stationName =  selectedCity
-                    if(stationName.equals("New Delhi")){
-                        binding.stationCode.text="NDLS"
-                    }
-                    else if(stationName.equals("Mumbai Central")){
-                        binding.stationCode.text="MMCT"
-                    }
-                    else if(stationName.equals("Howrah Junction")){
-                        binding.stationCode.text="HWH"
-                    }
-                    else if(stationName.equals("Chennai Central")){
-                        binding.stationCode.text="MAS"
-                    }
-                    else if(stationName.equals("Varanasi Junction")){
-                        binding.stationCode.text="BSB"
-                    }
-                    else if(stationName.equals("Bangalore City")){
-                        binding.stationCode.text="SBC"
-                    }
-                    else if(stationName.equals("Lucknow Charbagh")){
-                        binding.stationCode.text="LKO"
+        binding.spinnerStationName.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedCity = cityList[position]
+                    if (position != 0) { // Avoid selecting "Select City" as a choice
+                        //tvSelectedCity.text =
+                        stationName = selectedCity
+                        if (stationName.equals("New Delhi")) {
+                            binding.stationCode.text = "NDLS"
+                        } else if (stationName.equals("Mumbai Central")) {
+                            binding.stationCode.text = "MMCT"
+                        } else if (stationName.equals("Howrah Junction")) {
+                            binding.stationCode.text = "HWH"
+                        } else if (stationName.equals("Chennai Central")) {
+                            binding.stationCode.text = "MAS"
+                        } else if (stationName.equals("Varanasi Junction")) {
+                            binding.stationCode.text = "BSB"
+                        } else if (stationName.equals("Bangalore City")) {
+                            binding.stationCode.text = "SBC"
+                        } else if (stationName.equals("Lucknow Charbagh")) {
+                            binding.stationCode.text = "LKO"
+                        }
                     }
                 }
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // Do nothing
+                }
             }
-        }
 
         binding.continueButton.setOnClickListener {
-            trainName=binding.trainName.text.toString()
-            trainNumber=binding.trainNumber.text.toString()
+            trainName = binding.trainName.text.toString()
             if (trainName.isNotEmpty() && trainNumber.isNotEmpty() && sidePosition.isNotEmpty()
                 && binding.stationCode.text.isNotEmpty() && stationName.isNotEmpty()
             ) {
@@ -223,6 +240,57 @@ class UploadInfoFragment : Fragment() {
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun trainNumber() {
+        val trainNumberLst = listOf(
+            "Select Train Number",
+            "18482",
+            "21631",
+            "13950",
+            "14819",
+            "12311",
+            "20281"
+        )
+
+        val adapterSide =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, trainNumberLst)
+        binding.spnTrainNumber.adapter = adapterSide
+        binding.spnTrainNumber.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val trNumber = trainNumberLst[position]
+                if (position != 0) {
+                    trainNumber = trNumber
+                    trainName(trainNumber)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Do nothing
+            }
+        }
+
+    }
+
+    private fun trainName(trainNumber: String) {
+        if(trainNumber.equals("18482")){
+            binding.trainName.text = "Rajdhani Express"
+        }else if(trainNumber.equals("21631")){
+            binding.trainName.text = "Shatabdi Express"
+        }else if(trainNumber.equals("13950")){
+            binding.trainName.text = "Duronto Express"
+        }else if(trainNumber.equals("14819")){
+            binding.trainName.text = "Tejas Express"
+        }else if(trainNumber.equals("20281")){
+            binding.trainName.text = "Garib Rath"
+        }else if(trainNumber.equals("12311")){
+            binding.trainName.text = "Rajdhani Express"
+        }
     }
 
     companion object {

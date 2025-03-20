@@ -48,7 +48,7 @@ class HistoryAdapter(
        // holder.departure.text = train.departure
       //  holder.to.text = train.to
       //  holder.arrival.text = train.arrival
-        holder.faults.text = "Faults: "+"5"//"Faults: ${train.faults}"
+        holder.faults.text = "Faults: "+ train.TotalFaults
         holder.faultImage.setOnClickListener {
             callback.onItemClicked(train.Id)
         }

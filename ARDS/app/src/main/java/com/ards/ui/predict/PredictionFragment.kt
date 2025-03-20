@@ -5,6 +5,8 @@ import FaultAdapter
 import FaultData
 import FaultImageAdapter
 import FaultResponses
+import android.app.AlertDialog
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -106,6 +108,16 @@ class PredictionFragment : Fragment() {
         //fetchFaultData()
         return view
     }
+    fun showNoDataDialog(context: Context) {
+        AlertDialog.Builder(context)
+            .setTitle("Data Unavailable")
+            .setMessage("No data was found. Please check your internet connection or try again later.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss() // Close dialog
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+            .show()
+    }
     private fun fetchFaultData() {
         val jsonRequestBody = JSONObject().apply {
             put("APIKey", ArdsConstant.ARDS_APIKEY)
@@ -122,10 +134,15 @@ class PredictionFragment : Fragment() {
                 try {
                     binding.progress.visibility = View.GONE
 
+
                     val faultResponse = FaultResponses(response)
                     faultList.clear()
                     faultList.addAll(faultResponse.data.faults)
                     faultAdapter.notifyDataSetChanged()
+
+                    if (faultResponse.data.faults.isEmpty()) {
+                        showNoDataDialog(requireContext())
+                    }
 
                     val faultImageResponse = FaultResponses(response)
                     faulImagetList.clear()

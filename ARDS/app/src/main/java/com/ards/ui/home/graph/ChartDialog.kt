@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.view.View
 import android.view.Window
 import android.widget.Button
+import android.widget.TextView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
@@ -28,7 +29,7 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.data.*
 
 
-class ChartDialog(private val context: Context, private val position: Int) {
+class ChartDialog(private val context: Context, private val position: Int, private val title: String) {
     lateinit var barChart:BarChart
     lateinit var pieChart:PieChart
     lateinit var lineChart:LineChart
@@ -43,11 +44,17 @@ class ChartDialog(private val context: Context, private val position: Int) {
         pieChart = dialog.findViewById<PieChart>(R.id.pieChart)
          lineChart = dialog.findViewById<LineChart>(R.id.linecart)
         val btnClose = dialog.findViewById<Button>(R.id.btnClose)
+        val titl = dialog.findViewById<TextView>(R.id.title)
+
+        titl.setText(title)
+
 
         when (position) {
             0 -> setupPieChart(pieChart) // Defects per Station
             1 -> setupBoxPlot(barChart)  // Repair Cost by Severity
             2 -> setupLineChart(lineChart) // Defects Over Time
+            3 -> setupStackedBarChart(barChart)
+            4 -> setupBarChart(barChart)
         }
         btnClose.setOnClickListener {
             dialog.dismiss()
@@ -187,17 +194,20 @@ class ChartDialog(private val context: Context, private val position: Int) {
 
     // Dummy Data - Stacked Bar Chart (Defect Source Breakdown)
     private fun setupStackedBarChart(chart: BarChart) {
+        barChart.visibility=View.VISIBLE
+        lineChart.visibility=View.GONE
+        pieChart.visibility=View.GONE
         // Defining defect source categories
-        val defectCategories = listOf("Environmental", "Manufacturing Fault", "Wear and Tear")
+        val defectCategories = listOf("Environmental", "Manufacturing\nFault", "Wear\nand Tear") // Add line breaks for better readability
 
-        // Creating stacked bar entries (X = index, Y = array of severity levels)
+// Creating stacked bar entries (X = index, Y = array of severity levels)
         val entries = listOf(
             BarEntry(0f, floatArrayOf(5f, 10f, 7f)),  // Environmental
             BarEntry(1f, floatArrayOf(8f, 12f, 10f)), // Manufacturing Fault
             BarEntry(2f, floatArrayOf(6f, 14f, 9f))   // Wear and Tear
         )
 
-        // Creating the stacked bar dataset
+// Creating the stacked bar dataset
         val dataSet = BarDataSet(entries, "Defect Sources by Severity")
         dataSet.colors = listOf(Color.RED, Color.YELLOW, Color.GREEN) // Colors for High, Medium, Low Severity
         dataSet.stackLabels = arrayOf("High", "Medium", "Low") // Labels for severity levels
@@ -207,14 +217,15 @@ class ChartDialog(private val context: Context, private val position: Int) {
         val barData = BarData(dataSet)
         chart.data = barData
 
-        // Custom X-axis labels
+// Custom X-axis labels
         val xAxis = chart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(defectCategories)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.granularity = 1f // Ensures labels are spaced correctly
         xAxis.setDrawGridLines(false)
+        xAxis.labelRotationAngle = -90f // Rotate labels vertically to prevent overlap
 
-        // Chart settings
+// Chart settings
         chart.axisLeft.setDrawGridLines(false)
         chart.axisRight.isEnabled = false // Hide right axis
         chart.description.isEnabled = false
@@ -222,5 +233,57 @@ class ChartDialog(private val context: Context, private val position: Int) {
         chart.setFitBars(true) // Adjusts bars properly
         chart.animateY(1000)
         chart.invalidate()
+
     }
+
+    private fun setupBarChart(chart: BarChart) {
+        barChart.visibility = View.VISIBLE
+        lineChart.visibility = View.GONE
+        pieChart.visibility = View.GONE
+
+        // Station names and their troubleshooting periods
+        val stationNames = listOf("Delhi", "Mumbai", "Kanpur", "Howrah")
+        val troubleshootingPeriods = listOf(680f, 300f, 250f, 270f)
+
+        // Modify station names to be in two lines
+        val formattedStationNames = stationNames.map { it.replace(" ", "\n") } // Add line break
+
+        // Creating bar entries
+        val entries = stationNames.indices.map { index ->
+            BarEntry(index.toFloat(), troubleshootingPeriods[index])
+        }
+
+        // Highlight New Delhi in a different color
+        val dataSet = BarDataSet(entries, "Troubleshooting Period")
+        val colors = stationNames.map { if (it == "New Delhi") Color.rgb(255, 120, 40) else Color.rgb(100, 149, 237) }
+        dataSet.colors = colors
+        dataSet.valueTextColor = Color.BLACK
+        dataSet.valueTextSize = 12f
+
+        val barData = BarData(dataSet)
+        chart.data = barData
+
+        // Customizing X-axis labels (Station Names with newlines)
+        val xAxis = chart.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(formattedStationNames) // Use formatted names
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.textSize = 12f
+        xAxis.setDrawGridLines(false)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = 0f // Keep text straight
+
+        // Y-axis customization
+        chart.axisLeft.isEnabled = false  // Hide left Y-axis
+        chart.axisRight.isEnabled = false // Hide right Y-axis
+
+        // Chart settings
+        chart.description.isEnabled = false
+        chart.setFitBars(true) // Adjust bar width
+        chart.animateY(1000)
+        chart.invalidate()
+    }
+
+
+
+
 }

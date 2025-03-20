@@ -1,3 +1,5 @@
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -111,6 +113,10 @@ class ProcessedsFragment : Fragment() {
                     faultList.addAll(faultResponse.data.faults)
                     faultAdapter.notifyDataSetChanged()
 
+                    if (faultResponse.data.faults.isEmpty()) {
+                        showNoDataDialog(requireContext())
+                    }
+
                     val faultImageResponse = FaultResponses(response)
                     faulImagetList.clear()
                     faulImagetList.addAll(faultImageResponse.data.faults)
@@ -136,6 +142,16 @@ class ProcessedsFragment : Fragment() {
             })
 
         queue.add(jsonObjectRequest)
+    }
+    fun showNoDataDialog(context: Context) {
+        AlertDialog.Builder(context)
+            .setTitle("Data Unavailable")
+            .setMessage("No data was found. Please check your internet connection or try again later.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss() // Close dialog
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+            .show()
     }
 
     // Function to seek video when timestamp is clicked

@@ -150,7 +150,7 @@
                             android:id="@+id/btnEditFault"
                             android:layout_width="0dp"
                             android:layout_weight="0.5"
-                            android:text="Cmts."
+                            android:text="Edit"
                             android:textSize="13sp"
                             android:textColor="@color/black"
                             android:gravity="center"

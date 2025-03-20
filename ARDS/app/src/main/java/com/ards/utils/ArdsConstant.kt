@@ -13,6 +13,8 @@ class ArdsConstant {
         val ARDS_BASE_URL = "https://dev.workerunionsupport.com/api/ToolKit/GetNotificationFaultUpdaedList"
         const val MOBILE = "mobile"
 
+        const val MEDIA_TYPE_AUDIO = 1
+        const val MEDIA_TYPE_FILE = 2
         const val EncryptedSharedPreferencesKey = "WUS"
         const val SharedPreferencesKey = "ARDS_SharedPreferences"
 
@@ -36,6 +38,8 @@ class ArdsConstant {
         const val NotificationFault = "ToolKit/GetNotificationFaultList"
         const val UserProfile = "ToolKit/UpdateUserProfile"
         const val MasterData = "ToolKit/GetToolkitMasterData"
+        const val UploadFile = "Master/UploadFile"
+        const val APIKey="APIKey"
         const val GetPresignedUrl = "get_presigned_url"
         const val ModelInference = "model_inference"
     }

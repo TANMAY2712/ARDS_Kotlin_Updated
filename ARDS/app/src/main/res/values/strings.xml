@@ -10,8 +10,13 @@
     <string name="start_recording">Start Recording</string>
     <string name="play">Play</string>
     <string name="title_upload">Upload</string>
-    <string name="get_prediction">Get Prediction</string>
+    <string name="get_prediction">APPLY ARDS</string>
     <string name="title_graph">Graph</string>
     <string name="title_user">User</string>
+    <string name="take_photo">Take photo</string>
+    <string name="cancel">Cancel</string>
+    <string name="logout">Logout</string>
+    <string name="choose_from_gallery">Choose from gallery</string>
+    <string name="uploadProfilePhotoRequest">To take your selfie or portrait image  please allow access to your mobile phone camera and storage</string>
 
 </resources>

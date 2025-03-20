@@ -101,6 +101,36 @@
                     android:layout_marginRight="12dp"
                     android:background="@color/black"/>
 
+                <!-- Train Number -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Train Number : "
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                    <Spinner
+                        android:id="@+id/spn_train_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:background="@null"
+                        android:padding="2dp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@color/black"/>
                 <!-- Train Name -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -115,7 +145,7 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
-                    <EditText
+                    <TextView
                         android:id="@+id/train_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -131,37 +161,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:background="@color/black"/>
-                <!-- Train Number -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Train Number : "
-                        android:padding="2dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
-                    <EditText
-                        android:id="@+id/train_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter Train Number"
-                        android:inputType="number"
-                        android:background="@null"
-                        android:padding="2dp"
-                        android:textSize="14sp"/>
-                </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:background="@color/black"/>
 
                 <!-- Scan Side -->
                 <LinearLayout

@@ -37,16 +37,16 @@
             <!-- Right-Side Logo -->
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/user"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/wus_logo"
                 />
 
             <ImageView
                 android:id="@+id/logoImage"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/wus_logo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_notifications_black_24dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="10dp"/>
         </androidx.appcompat.widget.Toolbar>
@@ -80,11 +80,204 @@
                     android:adjustViewBounds="true"/>
 
                 <!-- Graph Section -->
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp">
+
+                        <!-- First Card -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card_view_one"
+                            android:layout_width="100dp"
+                            android:layout_height="120dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="6dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            android:layout_marginEnd="12dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:padding="12dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Defects per Station"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:textColor="#555"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="8dp"/>
+
+                                <com.github.mikephil.charting.charts.PieChart
+                                    android:id="@+id/pieChart"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Second Card -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card_view_two"
+                            android:layout_width="100dp"
+                            android:layout_height="120dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="6dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            android:layout_marginEnd="12dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:padding="12dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Repair Cost by Severity"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:textColor="#555"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="8dp"/>
+
+                                <com.github.mikephil.charting.charts.BarChart
+                                    android:id="@+id/barChart"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Third Card -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card_view_three"
+                            android:layout_width="100dp"
+                            android:layout_height="120dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="6dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            android:layout_marginEnd="12dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:padding="12dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Defects Over Time"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:textColor="#555"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="8dp"/>
+
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/lineChart"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Fourth Card -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card_view_four"
+                            android:layout_width="100dp"
+                            android:layout_height="120dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="6dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            android:layout_marginEnd="12dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:padding="12dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Defect Source Breakdown"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:textColor="#555"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="8dp"/>
+
+                                <com.github.mikephil.charting.charts.BarChart
+                                    android:id="@+id/defect_source_breakdown"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Fifth Card -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card_view_five"
+                            android:layout_width="100dp"
+                            android:layout_height="120dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="6dp"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:padding="12dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Troubleshoot Period"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:textColor="#555"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="8dp"/>
+
+                                <com.github.mikephil.charting.charts.BarChart
+                                    android:id="@+id/troubleshooting"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/graphRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
+                    android:visibility="gone"
                     android:paddingHorizontal="10dp"
                     tools:listitem="@layout/graph_card"
                     tools:itemCount="1"/>
@@ -103,7 +296,7 @@
                         android:paddingLeft="10dp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_marginTop="16dp"/>
+                        />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -112,7 +305,7 @@
                         android:textStyle="bold"
                         android:paddingLeft="10dp"
                         android:textColor="@color/black"
-                        android:layout_marginTop="16dp"/>
+                        />
 
                 </LinearLayout>
 

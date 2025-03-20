@@ -32,6 +32,7 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:background="@drawable/back"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 tools:ignore="MissingConstraints" />
 
@@ -67,6 +68,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout_pf"
                 android:layout_width="0dp"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_8dp"
                 android:layout_marginTop="@dimen/margin_16dp"
@@ -183,7 +185,7 @@
                     android:id="@+id/textViewdob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="date_of_birth"
+                    android:text="Date Of Birth"
                     android:textColor="@color/purple_500"
                     android:textStyle="bold" />
 
@@ -358,6 +360,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/branch_lyout" />
 
+            <TextView
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginBottom="@dimen/margin_16dp"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:layout_weight="1"
+                android:background="@drawable/enabled_button_bg"
+                android:gravity="center"
+                android:padding="@dimen/padding_10dp"
+                android:text="Logout"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/update" />
 
 
             <ImageView

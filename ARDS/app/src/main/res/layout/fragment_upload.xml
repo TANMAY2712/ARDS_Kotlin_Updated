@@ -63,8 +63,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/gifLoaderContainerUpload"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/topBarContainer"

@@ -78,7 +78,7 @@ class GraphCardAdapter(
             invalidate()
         }
         holder.linear.setOnClickListener {
-            ChartDialog(context, position).showChartDialog()
+            ChartDialog(context, position,"").showChartDialog()
            /* Navigation.findNavController(holder.linear)
                 .navigate(R.id.navigation_graph)*/
         }

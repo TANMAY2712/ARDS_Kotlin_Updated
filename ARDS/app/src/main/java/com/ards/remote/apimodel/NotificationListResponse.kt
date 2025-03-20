@@ -27,6 +27,7 @@ class NotificationListResponse (
             val coach_side: String = "",
             val output_url: String = "",
             val createdDate: String = "",
+            val TotalFaults: String = "",
         )
     }
 }

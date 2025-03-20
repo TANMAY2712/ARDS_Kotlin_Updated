@@ -127,7 +127,8 @@ class UploadFragment : Fragment() {
                     "Fault_ID" to "",
                     "faulty_details" to obj.optString("fault_info", "No details"),
                     "faulty_probablity" to obj.optString("fault_probability", "N/A"),
-                    "Image_path" to obj.optString("image_url", "")
+                    "Image_path" to obj.optString("image_url", ""),
+                    "fault_timestamp" to obj.optString("fault_timestamp", "")
                 )
 
                 faultsList.add(faultMap) // This should now work fine
@@ -164,10 +165,23 @@ class UploadFragment : Fragment() {
             { response ->
                 binding.gifLoaderContainerUpload.visibility = View.GONE
                 Log.d("VolleyResponse", "Response: $response")
-                val intent = Intent(activity, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                activity?.finish()
+                try {
+                    val responseCode = response.getInt("ResponseCode")
+                    val successMessage = response.getString("SuccessMessage")
+                    val notificationId = response.getJSONObject("Data").getInt("NotificationId")
+                    val bundle = Bundle()
+                    bundle.putInt("notification_id_key", notificationId)
+                    Navigation.findNavController(binding.btnPredict)
+                        .navigate(R.id.uploadFragment_to_predictFragment, bundle)
+                    /*val intent = Intent(activity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    activity?.finish()*/
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
                 /*val bundle = Bundle()
                 bundle.putInt("notification_id_key", notificationId)
                 Navigation.findNavController(binding.recentTrainsRecyclerView)

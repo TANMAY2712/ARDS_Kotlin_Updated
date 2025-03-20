@@ -4,14 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ards.remote.apimodel.MasterDataRequest
 import com.ards.remote.apimodel.MasterDataResponse
+import com.ards.remote.apimodel.UploadFileResponse
 import com.ards.remote.apimodel.UserProfileRequest
 import com.ards.remote.apimodel.UserProfileResponse
 import com.ards.remote.remote.ApiFactory
 import com.ards.remote.remote.service.ArdsService
 import com.ards.utils.ArdsConstant
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class UserRepository {
     private val apiService: ArdsService = ApiFactory.RetrofitClient.createService(
@@ -88,4 +95,32 @@ class UserRepository {
 
         return liveData
     }
+
+    fun uploadProfileImage(userImage: MultipartBody.Part, apikey: RequestBody): LiveData<Result<UploadFileResponse>> {
+        val liveData = MutableLiveData<Result<UploadFileResponse>>()
+
+        val call = apiService.uploadfile(
+            userImage,apikey
+        )
+        call.enqueue(object : Callback<UploadFileResponse> {
+            override fun onResponse(
+                call: Call<UploadFileResponse>,
+                response: Response<UploadFileResponse>
+            ) {
+
+                if (response.isSuccessful) {
+                    liveData.value = Result.success(response.body()!!)
+                } else {
+                    liveData.value = Result.failure(Exception("Error: ${response.message()}"))
+                }
+            }
+
+            override fun onFailure(call: Call<UploadFileResponse>, t: Throwable) {
+                liveData.value = Result.failure(t)
+            }
+        })
+
+        return liveData
+    }
+
 }
