@@ -133,7 +133,12 @@
         android:id="@+id/notificationFragment"
         android:name="com.ards.ui.notification.NotificationListFragment"
         android:label="@string/title_notification"
-        tools:layout="@layout/fragment_notification"/>
+        tools:layout="@layout/fragment_notification">
+
+        <action
+            android:id="@+id/uploadFragment_to_predictFragment"
+            app:destination="@id/navigation_predictFragment" />
+    </fragment>
 
 
     <fragment

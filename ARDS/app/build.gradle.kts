@@ -81,6 +81,8 @@ dependencies {
     implementation ("com.android.volley:volley:1.2.1")
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
     implementation(libs.androidx.material3.android)
+    implementation ("com.github.chrisbanes:PhotoView:2.3.0")
+
 
 
 }

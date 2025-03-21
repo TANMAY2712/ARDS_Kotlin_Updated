@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ards.R
 import com.ards.remote.apimodel.NotificationListRequest
 import com.ards.remote.apimodel.NotificationListResponse
+import com.ards.ui.history.adapter.RecentAdapter
 
 class NotificationAdapter(
     private val context: Context,
-    private var componentList: List<NotificationListResponse.DataResponse.Faults>
+    private var componentList: List<NotificationListResponse.DataResponse.Faults>,
+    private val callback: RecentAdapter.Callback
 ) :
     RecyclerView.Adapter<NotificationAdapter.ComponentViewHolder>() {
 
@@ -47,6 +49,7 @@ class NotificationAdapter(
         //holder.totalVideos.text = "Total Videos: ${component.totalVideos}"
 
         holder.btnView.setOnClickListener {
+            callback.onItemClicked(component.Id)
             // Handle button click (e.g., open video list)
         }
     }

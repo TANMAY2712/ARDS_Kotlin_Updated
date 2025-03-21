@@ -1,11 +1,13 @@
 package com.ards.ui.history.adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.ards.R
 import com.ards.remote.apimodel.NotificationListResponse
@@ -41,7 +43,13 @@ class RecentAdapter(
         holder.trainTime.text = DateUtils.getAppDateFromApiDate(train.createdDate)//train.departure+" -> "+ train.arrival
         holder.faults.text = "Faults: "+train.TotalFaults
         holder.faultImage.setOnClickListener {
-            callback.onItemClicked(train.Id)
+            if (train.TotalFaults.toInt()>0){
+                callback.onItemClicked(train.Id)
+            }else{
+                Toast.makeText(context,"No Fault Found",Toast.LENGTH_SHORT).show()
+               // showNoDataDialog(context)
+            }
+
         }
     }
 
@@ -49,5 +57,14 @@ class RecentAdapter(
 
     interface Callback {
         fun onItemClicked(notificationId: Int)
+    }
+    fun showNoDataDialog(context: Context) {
+        AlertDialog.Builder(context)
+            .setTitle("Data Unavailable")
+            .setMessage("No fault found.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss() // Close dialog
+            }
+            .show()
     }
 }

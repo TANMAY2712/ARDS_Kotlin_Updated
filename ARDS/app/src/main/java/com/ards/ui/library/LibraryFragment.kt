@@ -131,6 +131,9 @@ class LibraryFragment : Fragment() {
 
 
     fun showVideoDialog(context: Context, videoUrl: String) {
+        // Extract video ID
+        val videoId = getYoutubeVideoId(videoUrl)
+
         // Inflate custom layout
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_video_player, null)
 
@@ -139,9 +142,10 @@ class LibraryFragment : Fragment() {
         val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
 
         // Initialize YouTube Player
+        lifecycle.addObserver(youTubePlayerView) // Ensure proper lifecycle handling
         youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.loadVideo(videoUrl, 0f) // Play video from start
+                youTubePlayer.loadVideo(videoId, 0f) // Load extracted video ID
             }
         })
 
@@ -159,5 +163,6 @@ class LibraryFragment : Fragment() {
         // Show Dialog
         dialog.show()
     }
+
 
 }

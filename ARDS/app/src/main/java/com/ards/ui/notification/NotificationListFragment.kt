@@ -10,9 +10,12 @@ import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ards.MainActivity
+import com.ards.R
 import com.ards.databinding.FragmentNotificationBinding
+import com.ards.ui.history.adapter.RecentAdapter
 import com.ards.ui.library.LibraryViewModel
 import com.ards.ui.notification.adapter.NotificationAdapter
 import com.ards.ui.otp.OtpViewModel
@@ -56,7 +59,16 @@ class NotificationListFragment : Fragment() {
                 result.onSuccess { notifications ->
                     // Setting up RecyclerView
                     binding.rvNotification.layoutManager = GridLayoutManager(requireContext(), 1)
-                    notificationAdapter = NotificationAdapter(requireContext(), notifications.Data.faults)
+                    notificationAdapter = NotificationAdapter(requireContext(), notifications.Data.faults, object : RecentAdapter.Callback {
+                        override fun onItemClicked(
+                            notificationId: Int
+                        ) {
+                            val bundle = Bundle()
+                            bundle.putInt("notification_id_key", notificationId)
+                            Navigation.findNavController(binding.rvNotification)
+                                .navigate(R.id.uploadFragment_to_predictFragment, bundle)
+                        }
+                    })
                     binding.rvNotification.adapter = notificationAdapter
                 }
 
